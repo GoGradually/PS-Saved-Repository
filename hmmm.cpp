@@ -8,8 +8,7 @@ const ll MOD = 1000000007LL;
 
 using namespace std;
 
-void Solve() {
-}
+void Solve() {}
 
 int main() {
     ios_base::sync_with_stdio(false);

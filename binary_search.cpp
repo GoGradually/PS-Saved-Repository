@@ -25,3 +25,15 @@ int first_true(int lo, int hi) {
     }
     return lo;
 }
+
+int binary_search(int lo, int hi) {
+    while (lo <= hi) {
+        int mid = (lo + hi) / 2;
+        if (check(mid)) {
+            lo = mid + 1;
+        } else {
+            hi = mid - 1;
+        }
+    }
+    return hi;
+}

@@ -13,29 +13,26 @@ void Solve() {
     cin >> n;
     string str;
     cin >> str;
-    vector<int> input(n), ans(n), val(n+1);
+    vector<int> input(n), ans(n), val(n + 1);
     val[0] = 1;
     val[n] = 1;
     bool ok = false;
-    for (int i = 0; i < n; i++)
-    {
+    for (int i = 0; i < n; i++) {
         input[i] = str[i] - '0';
-        if (i<n-1&&input[i] > 1) ok = true;
+        if (i < n - 1 && input[i] > 1) ok = true;
     }
     if (ok) {
         val[1] = 1;
         val[n - 1] = 1;
     }
-    for (int i = n-1; i >= 0; i--)
-    {
+    for (int i = n - 1; i >= 0; i--) {
         ans[i] = val[i + 1] - (input[i]);
         if (ans[i] < 0) {
             ans[i] += 10;
             val[i] -= 1;
         }
     }
-    for (int i = 0; i < n; i++)
-    {
+    for (int i = 0; i < n; i++) {
         cout << ans[i];
     }
     cout << '\n';

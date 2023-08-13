@@ -8,7 +8,18 @@ const ll MOD = 1000000007LL;
 
 using namespace std;
 
-void Solve() {}
+void Solve() {
+    int n, m;
+    cin >> n >> m;
+    ll ans = 0;
+    for (int i = 0; i < m; i++) {
+        ans += i;
+    }
+    for (int i = m; i <= n * m; i += m) {
+        ans += i;
+    }
+    cout << ans << '\n';
+}
 
 int main() {
     ios_base::sync_with_stdio(false);

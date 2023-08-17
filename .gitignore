@@ -1,9 +1,11 @@
 atcoder/
 x64/Debug/
 .vscode/
+.vs/
 11049.exe
 PS.exe
 hmmm.exe
+PSSampleProject.sln
 PSSampleProject.vcxproj
 PSSampleProject.vcxproj.filters
 PSSampleProject.vcxproj.user

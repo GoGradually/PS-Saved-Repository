@@ -37,3 +37,23 @@ int binary_search(int lo, int hi) {
     }
     return hi;
 }
+int ternary_search(int lo, int hi) {
+    ll lo = 0, hi = n - 1;
+    while (hi - lo >= 3) {
+        ll p = (lo * 2 + hi) / 3, q = (lo + hi * 2) / 3;
+        if (f(p) >= f(q))
+            hi = q;
+        else
+            lo = p;
+    }
+    int val = 0;
+    int mx = 0;
+    for (int i = lo; i <= hi; i++) {
+        int temp = f(i);
+        if (mx < temp) {
+            mx = temp;
+            val = i;
+        }
+    }
+    return val;
+}

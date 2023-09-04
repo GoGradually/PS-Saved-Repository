@@ -11,6 +11,30 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    vector<ll> arr(n);
+    vector<ll> dp(n + 1, lINF);
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    dp[0] = 0;
+    for (int i = 1; i < n - 1; i++) {
+        if (i <= 2) {
+            dp[i] = max(0LL, max(arr[i - 1], arr[i + 1]) - arr[i] + 1LL);
+        }
+        else if (i % 2 == 0) {
+            dp[i] = min(dp[i - 3], dp[i - 2]) +
+                    max(0LL, max(arr[i - 1], arr[i + 1]) - arr[i] + 1LL);
+        } else
+            dp[i] = dp[i - 2]+
+                    max(0LL, max(arr[i - 1], arr[i + 1]) - arr[i] + 1LL);
+    }
+    if (n % 2 == 0) {
+        ll ans = min(dp[n - 2], dp[n - 3]);
+        cout << ans << '\n';
+    } else {
+        ll ans = dp[n - 2];
+        cout << ans << '\n';
+    }
 }
 
 int main() {

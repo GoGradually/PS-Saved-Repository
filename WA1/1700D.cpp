@@ -11,13 +11,51 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    vector<ll> arr(n);
+    vector<ll> dp(n);
+    ll sum = 0;
+    for (ll i = 0; i < n; i++) {
+        cin >> arr[i];
+        sum += arr[i];
+        ll tag = (sum % (i + 1) == 0) ? 0 : 1;
+        if (i == 0)
+            dp[i] = sum / (i + 1) + tag;
+        else
+            dp[i] = max(dp[i - 1], sum / (i + 1) + tag);
+    }
+    int q;
+    cin >> q;
+    while (q--) {
+        int t;
+        cin >> t;
+        ll left = 1, right = n;
+        auto check = [&](int sudo) {
+            ll now = sum / sudo + ((sum % sudo != 0) ? 1 : 0);
+            if (max(dp[sudo - 1], now) <= t) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+        while (left <= right) {
+            ll mid = (left + right) / 2;
+            if (check(mid)) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        if (left > n)
+            cout << -1 << '\n';
+        else
+            cout << left << '\n';
+    }
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
     int T = 1;
-    cin >> T;
     while (T--) Solve();
     return 0;
 }

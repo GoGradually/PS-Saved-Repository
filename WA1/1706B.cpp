@@ -12,9 +12,17 @@ void Solve() {
     int n;
     cin >> n;
     vector<int> arr(n);
-    vector<vector<int>> ans(n, vector<int>(2));
+    vector<int> before(n + 1);
+    vector<int> ans(n + 1);
     for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+        if (ans[arr[i]] == 0 || (i - before[arr[i]]) % 2 == 1) ans[arr[i]]++;
+        before[arr[i]] = i;
     }
+    for (int i = 1; i <= n; i++) {
+        cout << ans[i] << ' ';
+    }
+    cout << '\n';
 }
 
 int main() {

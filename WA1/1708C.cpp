@@ -11,6 +11,50 @@ using namespace std;
 void Solve() {
     int n, q;
     cin >> n >> q;
+    vector<int> arr(n);
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    auto f = [&](ll val) {
+        int now = q;
+        int ret = 0;
+        for (int i = 0; i < n; i++) {
+            if (arr[i] <= now) {
+                ret += 1;
+            } else {
+                if (i >= val) {
+                    now--;
+                    ret += 1;
+                } else
+                    ret += 0;
+            }
+        }
+        return now >= 0;
+    };
+    ll lo = 0, hi = n - 1;
+    while (lo <= hi) {
+        ll mid = (lo + hi) / 2;
+        if (f(mid))
+            hi = mid - 1;
+        else
+            lo = mid + 1;
+    }
+    int val = hi + 1;
+    int mx = 0;
+    string ans;
+    int now = q;
+    for (int i = 0; i < n; i++) {
+        if (arr[i] <= now) {
+            ans += '1';
+        } else {
+            if (now > 0 && i >= val) {
+                now--;
+                ans += '1';
+            } else
+                ans += '0';
+        }
+    }
+    cout << ans << '\n';
 }
 
 int main() {

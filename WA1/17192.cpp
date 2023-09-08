@@ -20,7 +20,7 @@ int main() {
     while (T--) Solve();
     return 0;
 }
-
+//피드백 : 누적 합 - dp 형태의 다이나믹 프로그래밍의 존재
 /*
 찾아야 할 것들
 *int 오버플로우, out of bounds

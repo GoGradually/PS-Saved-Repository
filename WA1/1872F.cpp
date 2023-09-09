@@ -100,7 +100,7 @@ int main() {
     while (T--) Solve();
     return 0;
 }
-
+//피드백: functional graph 의 floyd algorithm은 사이클에 진입하는 노드를 찾기 위한 용도!!!!!!!
 /*
 찾아야 할 것들
 *int 오버플로우, out of bounds

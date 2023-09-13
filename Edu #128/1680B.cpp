@@ -9,8 +9,28 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    int n, m;
+    cin >> n >> m;
+    vector<string> arr(n);
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (arr[i][j] == 'R') {
+                for (int k = 0; k < j; k++) {
+                    for (int l = 0; l < n; l++) {
+                        if (arr[l][k] == 'R') {
+                            cout << "NO\n";
+                            return;
+                        }
+                    }
+                }
+                cout << "YES\n";
+                return;
+            }
+        }
+    }
 }
 
 int main() {

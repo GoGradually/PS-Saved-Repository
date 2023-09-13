@@ -9,8 +9,26 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    int l1, l2, r1, r2;
+    cin >> l1 >> r1 >> l2 >> r2;
+    if (l1 <= l2 && l2 <= r1) {
+        cout << l2 << '\n';
+        return;
+    }
+    if (l2 <= l1 && l1 <= r2) {
+        cout << l1 << '\n';
+        return;
+    }
+    if (l1 <= l2 && r2 <= r1) {
+        cout << l2 << '\n';
+        return;
+    }
+    if (l2 <= l1 && r1 <= r2) {
+        cout << l1 << '\n';
+        return;
+    }
+    cout << l1 + l2 << '\n';
+
 }
 
 int main() {

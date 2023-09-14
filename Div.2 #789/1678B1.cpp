@@ -11,6 +11,25 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    string str;
+    cin >> str;
+    vector<pair<int, int>> arr;
+    arr.push_back({str[0] - '0', 1});
+    for (int i = 1; i < n; i++) {
+        if (str[i] - '0' == arr.back().first)
+            arr.back().second++;
+        else
+            arr.push_back({str[i] - '0', 1});
+    }
+    int ans = 0;
+    for (int i = 0; i < arr.size(); i++) {
+        if (arr[i].second % 2 == 1) {
+            arr[i + 1].second++;
+            ans++;
+            arr[i].second--;
+        }
+    }
+    cout << ans << '\n';
 }
 
 int main() {

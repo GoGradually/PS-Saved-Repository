@@ -11,6 +11,24 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    vector<int> arr(n);
+    vector<int> check(101);
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+        check[arr[i]]++;
+    }
+    if (check[0] > 0) {
+        cout << n - check[0] << '\n';
+        return;
+    }
+    int ans = n + 1;
+    for (int i = 1; i < 101; i++) {
+        if (check[i] > 1) {
+            cout << n << '\n';
+            return;
+        }
+    }
+    cout << n + 1 << '\n';
 }
 
 int main() {

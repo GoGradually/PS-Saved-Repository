@@ -13,34 +13,25 @@ void Solve() {
     cin >> n;
     string str;
     cin >> str;
-    vector<pair<int, int>> arr;
-    arr.push_back({str[0] - '0', 1});
-    for (int i = 1; i < n; i++) {
-        if (str[i] - '0' == arr.back().first)
-            arr.back().second++;
-        else
-            arr.push_back({str[i] - '0', 1});
+    vector<vector<pair<int, int>>> dp(n + 1,
+                                      vector<pair<int, int>>(2, {INF, INF}));
+    dp[2][0] = {str[0] - '0' + str[1] - '0', 1};
+    dp[2][1] = {1 - (str[0] - '0') + 1 - (str[1] - '0'), 1};
+    for (int i = 2; i < n; i += 2) {
+        int c0, c1;
+        c0 = str[i] - '0' + str[i + 1] - '0';
+        c1 = 1 - (str[i] - '0') + 1 - (str[i + 1] - '0');
+        dp[i + 2][0] =
+            min(dp[i + 2][0], {dp[i][1].first + c0, dp[i][1].second + 1});
+        dp[i + 2][0] =
+            min(dp[i + 2][0], {dp[i][0].first + c0, dp[i][0].second});
+        dp[i + 2][1] =
+            min(dp[i + 2][1], {dp[i][0].first + c1, dp[i][0].second + 1});
+        dp[i + 2][1] =
+            min(dp[i + 2][1], {dp[i][1].first + c1, dp[i][1].second});
     }
-    int t = arr.size();
-    bool tag = false;
-    int cnt[2] = {0, 0};
-    int check = 0;
-    for (int i = 0; i < arr.size(); i++) {
-        if (!tag && arr[i].second % 2 == 1) {
-            tag = true;
-            check = 0;
-            cnt[0] = 0;
-            cnt[1] = 0;
-            cnt[arr[i].first] += arr[i].second;
-        } else if (tag && arr[i].second % 2 == 1) {
-            cnt[arr[i].first] += arr[i].second;
-            check++;
-            tag = false;
-        } else if (tag && arr[i].second % 2 == 0) {
-            cnt[arr[i].first] += arr[i].second;
-            check++;
-        }
-    }
+    auto ans = min(dp[n][0], dp[n][1]);
+    cout << ans.first << ' ' << ans.second << '\n';
 }
 
 int main() {
@@ -65,3 +56,11 @@ int main() {
 // 1. "추론"({greedy, D&C, DP, graph}, 증명으로 아이디어)
 // 2. 알고리즘 "처음"부터 풀이과정 직접 전개, cutting
 // 3. "구현"
+
+/*
+take notes.
+// 1. 각 인덱스는 짝수개씩 묶여야 한다.
+// 2. n개의 문자를 2개씩 묶어 생각할 수 있다.
+// 3. 이전 블록의 색깔과 지금 바뀌었다면 하나 늘어난다.
+초기조건 어떡하지? -> 때려박기
+*/

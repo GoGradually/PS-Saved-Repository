@@ -11,6 +11,19 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    vector<int> arr(n);
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    sort(arr.begin(), arr.end());
+    int ans = 0;
+    for (int i = 1; i <= n; i++) {
+        int now = upper_bound(arr.begin(), arr.end(), i) - arr.begin();
+        if (now >= i) {
+            ans = i;
+        }
+    }
+    cout << ans + 1 << '\n';
 }
 
 int main() {
@@ -38,5 +51,6 @@ int main() {
 
 /*
 take notes.
+모이기로 한 사람 수
 
 */

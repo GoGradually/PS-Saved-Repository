@@ -16,26 +16,16 @@ void Solve() {
         cin >> arr[i];
     }
     ll ans = 0;
-    vector<int> under(n);
+    vector<ll> c(n);
     for (int i = 0; i < n; i++) {
-        for (int j = i + 1; j < n; j++) {
-            if (arr[i] > arr[j]) {
-                under[i]++;
-            }
+        ll d = 0;
+        for (int j = n - 1; j > i; j--) {
+            ans += c[j] * d;
+            if (arr[i] < arr[j]) c[j]++;
+            if (arr[i] > arr[j]) d++;
         }
     }
 
-    for (int i = n - 1; i >= 0; i--) {
-        ll val = 0;
-        for (int j = i - 1; j >= 0; j--) {
-            if (arr[j] < arr[i]) {
-                ans += val;
-            }
-            val += under[j];
-            if (arr[j] > arr[i]) val--;
-            cout << j << ' ' << i << ' ' << "val : " << val << '\n';
-        }
-    }
     cout << ans << '\n';
 }
 
@@ -61,3 +51,6 @@ int main() {
 // 1. "추론"({greedy, D&C, DP, graph}, 증명으로 아이디어)
 // 2. 알고리즘 "처음"부터 풀이과정 직접 전개, cutting
 // 3. "구현"
+
+// 피드백: a [] c, b [] d 이면 -> b와 c를 엮는다!!!!!!!!!!
+// 변수 4개 관계식 2개의 n^2 풀이법

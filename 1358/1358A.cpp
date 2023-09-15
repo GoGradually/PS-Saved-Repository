@@ -9,8 +9,11 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    int a, b;
+    cin >> a >> b;
+    int ans = a * b / 2;
+    if (a * b % 2 == 1) ans++;
+    cout << ans << '\n';
 }
 
 int main() {
@@ -38,5 +41,6 @@ int main() {
 
 /*
 take notes.
-
+a*b%2;
+나머지 0 아니면 전등 하나 추가
 */

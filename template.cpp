@@ -35,3 +35,7 @@ int main() {
 // 1. "추론"({greedy, D&C, DP, graph}, 증명으로 아이디어)
 // 2. 알고리즘 "처음"부터 풀이과정 직접 전개, cutting
 // 3. "구현"
+
+/*
+take notes.
+*/

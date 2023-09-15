@@ -9,8 +9,13 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    ll x1, y1, x2, y2;
+    cin >> x1 >> y1 >> x2 >> y2;
+    ll ans = 0;
+    ll x = x2 - x1, y = y2 - y1;
+    if (x > y) swap(x, y);
+    ans = x * (x - 1) + x + x * (y - x);
+    cout << ans + 1 << '\n';
 }
 
 int main() {
@@ -38,5 +43,15 @@ int main() {
 
 /*
 take notes.
+서로 대칭인 경로의 합이 같은가
+->대칭이면서 가운데 점을 지나는 경로
+1  2  4  7
+3  5  8  12
+6  9  13 18
+10 14 19 25
+15 20 26 33
+중점이 없으면 -> 그냥 곱하면 됨
+중점 있으면? 다시 또 나눠서 방법 계산
 
+최대 합 - 최소 합 + 1 이 정답
 */

@@ -1,0 +1,75 @@
+#include <bits/stdc++.h>
+#define ll long long
+#define INF (int)1e9 + 10
+#define lINF (ll)1e18 + 10LL
+const ll MOD = 1000000007LL;
+// #include <atcoder/modint.hpp>
+// using mint = atcoder::modint998244353;
+
+using namespace std;
+
+void Solve() {
+    int n, m;
+    cin >> n >> m;
+    priority_queue<int> people;
+    for (int i = 1; i <= n; i++) {
+        people.push(i);
+    }
+    vector<ll> sum(n + 1);
+    // time, tag, si, wi
+    priority_queue<tuple<ll, int, ll, ll>> flow;
+    for (int i = 0; i < m; i++) {
+        ll t, w, s;
+        cin >> t >> w >> s;
+        flow.push({-t, 1, w, s});
+    }
+    while (!flow.empty()) {
+        ll now, weight, wait;
+        int tag;
+        tie(now, tag, weight, wait) = flow.top();
+        flow.pop();
+        now *= -1;
+        if (tag == 2) {
+            people.push(weight);
+        } else {
+            if (people.empty()) continue;
+            ll me = people.top();
+            sum[people.top()] += weight;
+            people.pop();
+            flow.push({-(now + wait), 2, me, 0LL});
+        }
+    }
+    for (int i = n; i >= 1; i--) {
+        cout << sum[i] << '\n';
+    }
+}
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int T = 1;
+    while (T--) Solve();
+    return 0;
+}
+
+/*
+찾아야 할 것들
+*int 오버플로우, out of bounds
+*특수한 경우(n=1?)
+*아무것도 하지 않는 대신 무언가를 수행하기. 체계적인 상태를 유지.
+*적어두기
+*한가지 접근 방식에 얽메이지 말기
+*/
+// 알고리즘의 작동방식 "완전히" 이해하려 노력하기
+// 수행 목표
+// 1. "추론"({greedy, D&C, DP, graph}, 증명으로 아이디어)
+// 2. 알고리즘 "처음"부터 풀이과정 직접 전개, cutting
+// 3. "구현"
+
+/*
+take notes.
+한번 먹으면 Ti + Si 까지 휴식
+휴식이 끝나면 Ti + Si 시간부터 거기 있음(개구간)
+
+각 사람이 받은 총 면의 양
+*/

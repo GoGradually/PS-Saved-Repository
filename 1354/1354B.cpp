@@ -9,8 +9,35 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    set<int> one, two, three;
+    string str;
+    cin >> str;
+    for (int i = 0; i < str.size(); i++) {
+        if (str[i] == '1') one.insert(i);
+        if (str[i] == '2') two.insert(i);
+        if (str[i] == '3') three.insert(i);
+    }
+    int ans = INF;
+    for (int i = 0; i < str.size(); i++) {
+        int mx = 0;
+        if (one.lower_bound(i) != one.end())
+            mx = max(mx, *one.lower_bound(i) - i + 1);
+        else
+            mx = INF;
+        if (two.lower_bound(i) != two.end())
+            mx = max(mx, *two.lower_bound(i) - i + 1);
+        else
+            mx = INF;
+        if (three.lower_bound(i) != three.end())
+            mx = max(mx, *three.lower_bound(i) - i + 1);
+        else
+            mx = INF;
+        ans = min(mx, ans);
+    }
+    if (ans == INF)
+        cout << 0 << '\n';
+    else
+        cout << ans << '\n';
 }
 
 int main() {
@@ -38,5 +65,6 @@ int main() {
 
 /*
 take notes.
+
 
 */

@@ -9,8 +9,20 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    ll a, b, c, d;
+    cin >> a >> b >> c >> d;
+    if (a <= b)
+        cout << b << '\n';
+    else {
+        ll remain = a - b;
+        if (c <= d) {
+            cout << -1 << '\n';
+            return;
+        }
+        ll q = remain / (c - d);
+        if (remain % (c - d) != 0) q++;
+        cout << b + c * q << '\n';
+    }
 }
 
 int main() {
@@ -38,5 +50,6 @@ int main() {
 
 /*
 take notes.
+
 
 */

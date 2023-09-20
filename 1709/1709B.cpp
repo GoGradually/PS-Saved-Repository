@@ -9,15 +9,29 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    int n, m;
+    cin >> n >> m;
+    vector<ll> arr(n), psum(n + 1), psum2(n+1);
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+        if (i > 0) psum[i + 1] = psum[i] + max(arr[i - 1] - arr[i], 0LL);
+    }
+    for (int i = n - 2; i >= 0 ; i--)
+    {
+        psum2[i] = psum2[i + 1] + max(arr[i + 1] - arr[i], 0LL);
+    }
+    for (int i = 0; i < m; i++) {
+        int a, b;
+        cin >> a >> b;
+        if (a <= b)cout << psum[b] - psum[a] << '\n';
+        else cout << -(psum2[a - 1] - psum2[b - 1]) << '\n';
+    }
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
     int T = 1;
-    cin >> T;
     while (T--) Solve();
     return 0;
 }

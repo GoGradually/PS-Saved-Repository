@@ -11,6 +11,18 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    int arr[4];
+    cin >> arr[1] >> arr[2] >> arr[3];
+    int cnt = 0;
+    while (n != 0) {
+        n = arr[n];
+        cnt++;
+    }
+    if (cnt == 3) {
+        cout << "YES\n";
+    } else {
+        cout << "NO\n";
+    }
 }
 
 int main() {

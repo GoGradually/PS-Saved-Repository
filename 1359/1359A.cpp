@@ -9,8 +9,20 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    int n, m, k;
+    cin >> n >> m >> k;
+    int score = m;
+    score -= n / k;
+    if (score <= 0) {
+        cout << m << '\n';
+        return;
+    }
+    int cnt = 0;
+    while (score > 0) {
+        cnt++;
+        score -= (k - 1);
+    }
+    cout << n / k - cnt << '\n';
 }
 
 int main() {
@@ -38,5 +50,9 @@ int main() {
 
 /*
 take notes.
+1. 한명 몰빵
+2. 최대 -1씩  다 줌
+3. 마지막 사람까지 주게되면 그만큼 점수 감소함
+
 
 */

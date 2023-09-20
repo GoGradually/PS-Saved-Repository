@@ -11,13 +11,29 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    vector<int> arr(n);
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    int ans = 0;
+    for (int i = 0; i <= 30; i++) {
+        int val = 0;
+        for (int j = 0; j < n; j++) {
+            if (arr[j] > i)
+                val = 0;
+            else
+                val += arr[j];
+            if (val < 0) val = 0;
+            ans = max(ans, val - i);
+        }
+    }
+    cout << ans << '\n';
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
     int T = 1;
-    cin >> T;
     while (T--) Solve();
     return 0;
 }

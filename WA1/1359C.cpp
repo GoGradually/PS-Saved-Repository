@@ -7,10 +7,34 @@ const ll MOD = 1000000007LL;
 // using mint = atcoder::modint998244353;
 
 using namespace std;
-
 void Solve() {
-    int n;
-    cin >> n;
+    ll h, c;
+    ll t;
+    cin >> h >> c >> t;
+    if (t * 2 <= (h + c)) {
+        cout << 2 << '\n';
+        return;
+    }
+    auto go = [&](ll mid) {
+        if ((2LL * mid + 1) *
+                abs(t * (2LL * mid - 1LL) - (h * mid + c * mid - c)) >
+            (2LL * mid - 1) *
+                abs(t * (2LL * mid + 1LL) - (h * mid + c * mid + h))) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+    ll lo = 1, hi = INF;
+    while (lo <= hi) {
+        ll mid = (lo + hi) / 2;
+        if (go(mid)) {
+            lo = mid + 1;
+        } else {
+            hi = mid - 1;
+        }
+    }
+    cout << lo * 2 - 1 << '\n';
 }
 
 int main() {
@@ -38,5 +62,6 @@ int main() {
 
 /*
 take notes.
-
+피드백 : 부동 소수점 연산 피하기
+(2k+1)(t(2k-1) - (hk + ck - c)) < (2k-1)(t(2k+1) - (hk + ck + h))
 */

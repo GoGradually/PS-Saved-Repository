@@ -74,18 +74,18 @@ void Solve() {
             leftMin %= 2;
         }
         if (leftMax < rightMin || rightMax < leftMin) {
-            cout << "NO\n";
+            cout <<1<< "NO\n";
             return;
         }
         if (leftMax >= rightMin && leftMax <= rightMax) {
             if (leftMax - max(leftMin, rightMin) > 1) {
-                cout << "NO\n";
+                cout << 2 <<i<< "NO\n";
                 return;
             }
         }
         if (rightMax >= leftMin && rightMax <= leftMax) {
             if (rightMax - max(leftMin, rightMin) > 1) {
-                cout << "NO\n";
+                cout << 3 << "NO\n";
                 return;
             }
         }

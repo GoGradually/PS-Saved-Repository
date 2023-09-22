@@ -9,8 +9,25 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    ll a, k;
+    cin >> a >> k;
+    k--;
+    while (k--) {
+        int mindigit = 10, maxdigit = 0;
+        ll cal = a;
+        while (cal > 0) {
+            int digit = cal % 10;
+            cal /= 10;
+            mindigit = min(digit, mindigit);
+            maxdigit = max(digit, maxdigit);
+        }
+        if (mindigit == 0) {
+            cout << a << '\n';
+            return;
+        }
+        a += mindigit * maxdigit;
+    }
+    cout << a << '\n';
 }
 
 int main() {
@@ -32,7 +49,7 @@ int main() {
 */
 // 알고리즘의 작동방식 "완전히" 이해하려 노력하기
 // 수행 목표
-// 1. "추론"({greedy, D&C, DP, graph}, 증명으로 아이디어)
+// 1. "추론"(문제 특징의 증명으로 아이디어){greedy, D&C, DP, graph})
 // 2. 알고리즘 "처음"부터 풀이과정 직접 전개, cutting
 // 3. "구현"
 

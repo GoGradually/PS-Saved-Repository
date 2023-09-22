@@ -11,6 +11,19 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    vector<int> arr(n + 1);
+    for (int i = 0; i < n; i++) {
+        int temp;
+        cin >> temp;
+        arr[temp]++;
+    }
+    ll ans = 0;
+    ll remain = 0;
+    for (int i = 1; i <= n; i++) {
+        ans += (arr[i] + remain) / i;
+        remain = (arr[i] + remain) % i;
+    }
+    cout << ans << '\n';
 }
 
 int main() {
@@ -32,7 +45,7 @@ int main() {
 */
 // 알고리즘의 작동방식 "완전히" 이해하려 노력하기
 // 수행 목표
-// 1. "추론"({greedy, D&C, DP, graph}, 증명으로 아이디어)
+// 1. "추론"(문제 특징의 증명으로 아이디어){greedy, D&C, DP, graph})
 // 2. 알고리즘 "처음"부터 풀이과정 직접 전개, cutting
 // 3. "구현"
 

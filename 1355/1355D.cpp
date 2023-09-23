@@ -9,15 +9,29 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    int n, s;
+    cin >> n >> s;
+    if (n * 2 > s) {
+        cout << "NO\n";
+        return;
+    }
+    cout << "YES\n";
+    vector<int> arr(n);
+    for (int i = 0; i < n; i++) {
+        s -= 2;
+        arr[i] = 2;
+    }
+    arr[0] += s;
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << ' ';
+    }
+    cout << '\n' << 1 << '\n';
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
     int T = 1;
-    cin >> T;
     while (T--) Solve();
     return 0;
 }

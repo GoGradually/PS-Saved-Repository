@@ -2,21 +2,48 @@
 #define ll long long
 #define INF (int)1e9 + 10
 #define lINF (ll)1e18 + 10LL
-const ll MOD = 1000000007LL;
+const ll MOD = 998244353LL;
 // #include <atcoder/modint.hpp>
 // using mint = atcoder::modint998244353;
 
 using namespace std;
 
+vector<ll> factorial(200001, 1);
+
 void Solve() {
-    int n;
-    cin >> n;
+    string str;
+    cin >> str;
+    int n = str.size();
+    vector<pair<char, ll>> arr;
+    arr.push_back({str[0], 1});
+    ll ans = 1;
+    ll fact = 0;
+    ll cnt = 0;
+    for (int i = 1; i < n; i++) {
+        if (arr.back().first == str[i]) {
+            arr.back().second++;
+        } else {
+            cnt += arr.back().second - 1;
+            ans *= arr.back().second;
+            ans %= MOD;
+            arr.push_back({str[i], 1});
+        }
+    }
+    cnt += arr.back().second - 1;
+    ans *= arr.back().second;
+    ans %= MOD;
+
+    cout << cnt << ' ' << (factorial[cnt] * ans) % MOD << '\n';
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
     int T = 1;
+    for (int i = 1; i < 200001; i++) {
+        factorial[i] = factorial[i - 1] * i;
+        factorial[i] %= MOD;
+    }
     cin >> T;
     while (T--) Solve();
     return 0;

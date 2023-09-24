@@ -11,6 +11,22 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    vector<ll> a(n), b(n);
+    ll minA = INF, minB = INF;
+    ll sumA = 0, sumB = 0;
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+        sumA += a[i];
+        minA = min(minA, a[i]);
+    }
+    for (int i = 0; i < n; i++) {
+        cin >> b[i];
+        sumB += b[i];
+        minB = min(minB, b[i]);
+    }
+    ll ansA = sumB + minA * n;
+    ll ansB = sumA + minB * n;
+    cout << min(ansA, ansB) << '\n';
 }
 
 int main() {

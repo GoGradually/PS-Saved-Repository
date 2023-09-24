@@ -11,6 +11,19 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    vector<pair<int, int>> arr(n);
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i].first >> arr[i].second;
+    }
+    for (int i = 1; i < n; i++) {
+        if (arr[i].first >= arr[0].first) {
+            if (arr[i].second >= arr[0].second) {
+                cout << -1 << '\n';
+                return;
+            }
+        }
+    }
+    cout << arr[0].first << '\n';
 }
 
 int main() {

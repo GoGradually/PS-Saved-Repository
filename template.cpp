@@ -34,7 +34,7 @@ int main() {
 // 수행 목표
 // 1. "추론"(문제 특징의 증명으로 아이디어){greedy, D&C, DP, graph}
 // 2. 알고리즘 "처음"부터 풀이과정 직접 전개, cutting
-// 3. cutting | 구현(쪼개보기)
+// 3. cutting | 구현(차근차근 단순화)
 
 /*
 take notes.

@@ -9,24 +9,8 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n, x;
-    cin >> n >> x;
-    vector<int> arr(n);
-    for (int i = 0; i < n; i++) {
-        cin >> arr[i];
-    }
-    int minVal = arr[0], maxVal = arr[0];
-    int ans = 0;
-    for (int i = 1; i < n; i++) {
-        minVal = min(minVal, arr[i]);
-        maxVal = max(maxVal, arr[i]);
-        if (maxVal - minVal > 2 * x) {
-            ans++;
-            minVal = arr[i];
-            maxVal = arr[i];
-        }
-    }
-    cout << ans << '\n';
+    int n;
+    cin >> n;
 }
 
 int main() {

@@ -9,8 +9,24 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    int n, m;
+    cin >> n >> m;
+    vector<string> str(2);
+    cin >> str[0] >> str[1];
+    for (int i = 1; i <= m - 1; i++) {
+        if (str[1][m - i] != str[0][n - i]) {
+            cout << "NO\n";
+            return;
+        }
+    }
+    bool flag = false;
+    for (int i = 0; i < n - m + 1; i++) {
+        if (str[0][i] == str[1][0]) flag = true;
+    }
+    if (flag)
+        cout << "YES\n";
+    else
+        cout << "NO\n";
 }
 
 int main() {
@@ -32,11 +48,13 @@ int main() {
 */
 // 알고리즘의 작동방식 "완전히" 이해하려 노력하기
 // 수행 목표
-// 1. "추론"(문제 특징의 증명으로 아이디어){greedy, D&C, DP, graph}
-// 2. 알고리즘 "처음"부터 풀이과정 직접 전개, cutting
+// 1. "추론" {greedy, D&C, DP, graph}(문제 특징의 증명으로 아이디어)
+// 2. 알고리즘 "처음"부터 풀이과정 직접 전개
 // 3. cutting | 구현(차근차근 단순화)
 
 /*
 take notes.
 
 */
+
+// commit 시 피드백할 것 Message로 남겨두기!!

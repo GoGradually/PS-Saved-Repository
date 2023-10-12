@@ -38,7 +38,7 @@ int main() {
 
 /*
 take notes.
-
+인덱스 가중치 함수
 */
 
 // commit 시 피드백할 것 Message로 남겨두기!!

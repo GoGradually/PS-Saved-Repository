@@ -11,6 +11,12 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    int i = 1;
+    if (n % 2 == 1) cout << i++ << ' ';
+    for (; i <= n; i += 2) {
+        cout << i + 1 << ' ' << i << ' ';
+    }
+    cout << '\n';
 }
 
 int main() {

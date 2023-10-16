@@ -9,8 +9,54 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    int n, m, k;
+    cin >> n >> m >> k;
+
+    vector<int> arr(k);
+    for (int i = 0; i < k; i++) {
+        cin >> arr[i];
+    }
+    sort(arr.begin(), arr.end(), greater<int>());
+    int tempN = n, tempM = m;
+    bool chance = false;
+    for (int i = 0; i < k; i++) {
+        if (arr[i] / m >= 2 && tempN >= 2) {
+            tempN -= arr[i] / m;
+            if (arr[i] / m > 2) chance = true;
+        } else if (arr[i] / m >= 2 && tempN < 2) {
+            if (chance) {
+                tempN -= 1;
+                break;
+            }
+        }
+        if (tempN == 0) {
+            break;
+        }
+    }
+    if (tempN <= 0) {
+        cout << "Yes\n";
+        return;
+    }
+    chance = false;
+    for (int i = 0; i < k; i++) {
+        if (arr[i] / n >= 2 && tempM >= 2) {
+            tempM -= arr[i] / n;
+            if (arr[i] / n > 2) chance = true;
+        } else if (arr[i] / n >= 2 && tempM < 2) {
+            if (chance) {
+                tempM -= 1;
+                break;
+            }
+        }
+        if (tempM == 0) {
+            break;
+        }
+    }
+    if (tempM <= 0) {
+        cout << "Yes\n";
+        return;
+    }
+    cout << "No\n";
 }
 
 int main() {

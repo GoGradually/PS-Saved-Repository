@@ -9,8 +9,39 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    int n, m;
+    cin >> n >> m;
+    vector<int> arr(n + 1);
+    for (int i = 1; i <= n; i++) {
+        cin >> arr[i];
+    }
+
+    vector<int> cnt(n + 1);
+    vector<pair<int, int>> edge(m);
+    for (int i = 0; i < m; i++) {
+        int a, b;
+        cin >> a >> b;
+        cnt[a]++;
+        cnt[b]++;
+        edge[i] = {a, b};
+    }
+    int sum = 0;
+    int MIN = INF;
+    for (int i = 1; i <= n; i++) {
+        sum += cnt[i];
+        if (cnt[i] % 2 == 1) MIN = min(MIN, arr[i]);
+    }
+    if (m % 2 == 0) {
+        cout << 0 << '\n';
+        return;
+    }
+
+    for (int i = 0; i < m; i++) {
+        if (cnt[edge[i].first] % 2 == 0 && cnt[edge[i].second] % 2 == 0) {
+            MIN = min(MIN, arr[edge[i].first] + arr[edge[i].second]);
+        }
+    }
+    cout << MIN << '\n';
 }
 
 int main() {

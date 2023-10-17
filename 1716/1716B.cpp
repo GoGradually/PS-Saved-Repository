@@ -11,6 +11,22 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    vector<int> arr(n);
+    for (int i = 0; i < n; i++) {
+        arr[i] = i + 1;
+    }
+    cout << n << '\n';
+    for (int j = 0; j < n; j++) {
+        cout << arr[j] << ' ';
+    }
+    cout << '\n';
+    for (int i = n - 2; i >= 0; i--) {
+        swap(arr[i], arr[i + 1]);
+        for (int j = 0; j < n; j++) {
+            cout << arr[j] << ' ';
+        }
+        cout << '\n';
+    }
 }
 
 int main() {

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #define ll long long
-#define INF (int)1e9 + 10
+#define INF (ll)1e9 + 10
 #define lINF (ll)1e18 + 10LL
 const ll MOD = 1000000007LL;
 // #include <atcoder/modint.hpp>
@@ -9,14 +9,73 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    ll m;
+    cin >> m;
+    vector<vector<ll>> arr(2, vector<ll>(m + 1));
+    for (ll i = 1; i <= m; i++) {
+        cin >> arr[0][i];
+    }
+    for (ll i = 1; i <= m; i++) {
+        cin >> arr[1][i];
+    }
+    vector<vector<ll>> circuit(2, vector<ll>(m + 1));
+    circuit[0][0] = lINF + 2000000;
+    circuit[1][0] = lINF + 2000000;
+    ll x = 0;
+    for (ll i = 0; i < m; i++) {
+        ll nowPos = m - i;
+        if (x < arr[0][nowPos] + 2 * (i + 1) || x < arr[1][nowPos] + 1) {
+            if (x < arr[1][nowPos] + 1) {
+                x = arr[1][nowPos] + 1;
+            }
+            if (x < arr[0][nowPos] + 2 * (i + 1)) {
+                if (nowPos != 1)
+                    x = arr[0][nowPos] + 2 * (i + 1);
+                else
+                    x++;
+            }
+        } else {
+            x++;
+        }
+        circuit[0][nowPos] = x;
+    }
+    x = 0;
+    for (ll i = 0; i < m; i++) {
+        ll nowPos = m - i;
+        if (x < arr[0][nowPos] + 1 || x < arr[1][nowPos] + 2 * (i + 1)) {
+            if (x < arr[0][nowPos] + 1) {
+                x = arr[0][nowPos] + 1;
+            }
+            if (x < arr[1][nowPos] + 2 * (i + 1)) {
+                x = arr[1][nowPos] + 2 * (i + 1);
+            }
+        } else {
+            x++;
+        }
+        circuit[1][nowPos] = x;
+    }
+    ll nowPos = 0;
+    ll ans = lINF + 2000000;
+    ans = max(m * 2 - 1, circuit[nowPos][1]);
+    nowPos = 1 - nowPos;
+    x = arr[1][1] + 1;
+    for (ll i = 1; i < m; i++) {
+        if (ans > max(x + (m - i) * 2, x + circuit[nowPos][i + 1])) {
+            ans = max(x + (m - i) * 2, x + circuit[nowPos][i + 1]);
+        }
+        if (arr[nowPos][i + 1] > x) x = arr[nowPos][i + 1];
+        nowPos = 1 - nowPos;
+        x++;
+        if (arr[nowPos][i + 1] > x) x = arr[nowPos][i + 1];
+        x++;
+    }
+    cout << min(x, ans) << '\n';
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
-    int T = 1;
+    ll T = 1;
     cin >> T;
     while (T--) Solve();
     return 0;
@@ -24,7 +83,7 @@ int main() {
 
 /*
 찾아야 할 것들
-*int 오버플로우, out of bounds
+*ll 오버플로우, out of bounds
 *특수한 경우(n=1?)
 *아무것도 하지 않는 대신 무언가를 수행하기. 체계적인 상태를 유지.
 *적어두기

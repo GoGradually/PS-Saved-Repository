@@ -11,6 +11,12 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    if (n == 1)
+        cout << 2 << '\n';
+    else if (n == 2 || n == 3)
+        cout << 1 << '\n';
+    else
+        cout << (n - 1) / 3 + 1 << '\n';
 }
 
 int main() {

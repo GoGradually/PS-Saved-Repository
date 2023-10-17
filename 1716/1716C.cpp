@@ -14,62 +14,35 @@ void Solve() {
     vector<vector<ll>> arr(2, vector<ll>(m + 1));
     for (ll i = 1; i <= m; i++) {
         cin >> arr[0][i];
+        if (i > 1) arr[0][i]++;
     }
     for (ll i = 1; i <= m; i++) {
         cin >> arr[1][i];
+        arr[1][i]++;
     }
     vector<vector<ll>> circuit(2, vector<ll>(m + 1));
     circuit[0][0] = lINF + 2000000;
     circuit[1][0] = lINF + 2000000;
     ll x = 0;
     for (ll i = 0; i < m; i++) {
-        ll nowPos = m - i;
-        if (x < arr[0][nowPos] + 2 * (i + 1) || x < arr[1][nowPos] + 1) {
-            if (x < arr[1][nowPos] + 1) {
-                x = arr[1][nowPos] + 1;
+        for (int j = 0; j < 2; j++) {
+            ll nowPos = m - i;
+            circuit[j][nowPos] =
+                max(max(arr[j ^ 1][nowPos], arr[j][nowPos] + 2 * i - 1), circuit[j][nowPos]);
+            bool ok = true;
+            if (x < arr[j ^ 1][nowPos]) {
+                x = arr[j ^ 1][nowPos];
+                ok = false;
             }
-            if (x < arr[0][nowPos] + 2 * (i + 1)) {
-                if (nowPos != 1)
-                    x = arr[0][nowPos] + 2 * (i + 1);
-                else
-                    x++;
+            if (x < arr[j][nowPos] + 2 * (i + 1) - 1) {
+                x = arr[j][nowPos] + 2 * (i + 1) - 1;
+                ok = false;
             }
-        } else {
-            x++;
+
+            if (ok) x += 2;
+            circuit[j][nowPos] = x;
         }
-        circuit[0][nowPos] = x;
     }
-    x = 0;
-    for (ll i = 0; i < m; i++) {
-        ll nowPos = m - i;
-        if (x < arr[0][nowPos] + 1 || x < arr[1][nowPos] + 2 * (i + 1)) {
-            if (x < arr[0][nowPos] + 1) {
-                x = arr[0][nowPos] + 1;
-            }
-            if (x < arr[1][nowPos] + 2 * (i + 1)) {
-                x = arr[1][nowPos] + 2 * (i + 1);
-            }
-        } else {
-            x++;
-        }
-        circuit[1][nowPos] = x;
-    }
-    ll nowPos = 0;
-    ll ans = lINF + 2000000;
-    ans = max(m * 2 - 1, circuit[nowPos][1]);
-    nowPos = 1 - nowPos;
-    x = arr[1][1] + 1;
-    for (ll i = 1; i < m; i++) {
-        if (ans > max(x + (m - i) * 2, x + circuit[nowPos][i + 1])) {
-            ans = max(x + (m - i) * 2, x + circuit[nowPos][i + 1]);
-        }
-        if (arr[nowPos][i + 1] > x) x = arr[nowPos][i + 1];
-        nowPos = 1 - nowPos;
-        x++;
-        if (arr[nowPos][i + 1] > x) x = arr[nowPos][i + 1];
-        x++;
-    }
-    cout << min(x, ans) << '\n';
 }
 
 int main() {
@@ -97,7 +70,8 @@ int main() {
 
 /*
 take notes.
-
+막히면 무조건 거기서 막히는 것을 가정한다.
+변수 만들 때 통일성을 유지하도록 변형하는 능력의 필요성을 느꼈다
 */
 
 // commit 시 피드백할 것 Message로 남겨두기!!

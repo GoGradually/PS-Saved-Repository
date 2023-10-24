@@ -11,32 +11,13 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
-    vector<ll> arr(n);
-    for (int i = 0; i < n; i++) {
-        cin >> arr[i];
-    }
-    ll ret = lINF;
-    for (int i = 0; i < n; i++) {
-        ll now = 0;
-        ll cnt = 0;
-        for (int j = i - 1; j >= 0; j--) {
-            cnt += now / arr[j] + 1;
-            now = now / arr[j] * arr[j] + arr[j];
-        }
-        now = 0;
-        for (int j = i + 1; j < n; j++) {
-            cnt += now / arr[j] + 1;
-            now = now / arr[j] * arr[j] + arr[j];
-        }
-        ret = min(ret, cnt);
-    }
-    cout << ret << '\n';
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
     int T = 1;
+    cin >> T;
     while (T--) Solve();
     return 0;
 }

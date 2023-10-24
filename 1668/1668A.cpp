@@ -9,8 +9,15 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    int n, m;
+    cin >> n >> m;
+    if ((n == 1 && m > 2) || (n > 2 && m == 1)) {
+        cout << -1 << '\n';
+        return;
+    }
+    cout << (min(n, m) - 1) * 2 + (max(n, m) - min(n, m)) / 2 * 4 +
+                ((max(n, m) - min(n, m)) % 2 == 1 ? 1 : 0)
+         << '\n';
 }
 
 int main() {

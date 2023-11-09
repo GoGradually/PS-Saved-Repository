@@ -9,8 +9,32 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    ll n, k;
+    cin >> n >> k;
+    vector<ll> arr(n);
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    ll before_min = arr[0] - k + 1, before_max = arr[0] + k - 1;
+    for (int i = 1; i < n - 1; i++) {
+        ll now_min = arr[i], now_max = arr[i] + k - 1;
+        now_min = max(now_min, before_min);
+        now_max = min(now_max, before_max);
+        if (now_min > now_max) {
+            cout << "NO\n";
+            return;
+        }
+        before_min = now_min - k + 1;
+        before_max = now_max + k - 1;
+    }
+    ll now_min = arr[n - 1], now_max = arr[n - 1];
+    now_min = max(now_min, before_min);
+    now_max = min(now_max, before_max);
+    if (now_min > now_max) {
+        cout << "NO\n";
+        return;
+    }
+    cout << "YES\n";
 }
 
 int main() {

@@ -1,7 +1,9 @@
 atcoder/
 x64/Debug/
 .vscode/
+.cph/
 .vs/
+build/
 11049.exe
 PS.exe
 hmmm.exe

@@ -11,6 +11,15 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    int now = 9;
+    if (n >= 1) cout << 9;
+    if (n >= 2) cout << 8;
+    for (int i = 2; i < n; i++) {
+        cout << now;
+        now++;
+        if (now == 10) now -= 10;
+    }
+    cout << '\n';
 }
 
 int main() {

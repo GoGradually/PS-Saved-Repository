@@ -11,6 +11,46 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    vector<int> arr(n);
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    vector<int> check(n);
+    int ans = 0;
+    for (int i = 1; i < n - 1; i++) {
+        if (arr[i] > arr[i - 1] && arr[i] > arr[i + 1]) {
+            check[i] = 1;
+            ans++;
+        }
+        if (arr[i] < arr[i - 1] && arr[i] < arr[i + 1]) {
+            check[i] = 1;
+            ans++;
+        }
+    }
+    int mx = 0;
+    for (int i = 1; i < n - 1; i++) {
+        int val = check[i - 1] + check[i] + check[i + 1];
+        for (int j = -1; j <= 1; j++) {
+            int temp = arr[i];
+            arr[i] = arr[i + j];
+            int now = 0;
+            for (int k = -1; k <= 1; k++) {
+                if (i + k - 1 < 0) continue;
+                if (i + k + 1 >= n) continue;
+                if (arr[i + k - 1] < arr[i + k] &&
+                    arr[i + k + 1] < arr[i + k]) {
+                    now++;
+                }
+                if (arr[i + k - 1] > arr[i + k] &&
+                    arr[i + k + 1] > arr[i + k]) {
+                    now++;
+                }
+            }
+            mx = max(val - now, mx);
+            arr[i] = temp;
+        }
+    }
+    cout << ans - mx << '\n';
 }
 
 int main() {

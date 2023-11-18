@@ -9,15 +9,36 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    int n[3];
+    cin >> n[0] >> n[1] >> n[2];
+    vector<vector<ll>> arr(3, vector<ll>());
+    ll sum[3] = {0, 0, 0};
+    ll mn[3] = {lINF, lINF, lINF};
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < n[i]; j++) {
+            ll temp;
+            cin >> temp;
+            arr[i].push_back(temp);
+            sum[i] += temp;
+            mn[i] = min(mn[i], temp);
+        }
+    }
+
+    ll ans = 0;
+
+    ans = max(ans, sum[0] + sum[1] - sum[2]);
+    ans = max(ans, sum[0] + sum[2] - sum[1]);
+    ans = max(ans, sum[2] + sum[1] - sum[0]);
+    ans = max(ans, sum[0] + sum[1] + sum[2] - 2 * mn[1] - 2 * mn[2]);
+    ans = max(ans, sum[0] + sum[1] + sum[2] - 2 * mn[0] - 2 * mn[2]);
+    ans = max(ans, sum[0] + sum[1] + sum[2] - 2 * mn[0] - 2 * mn[1]);
+    cout << ans << '\n';
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
     int T = 1;
-    cin >> T;
     while (T--) Solve();
     return 0;
 }

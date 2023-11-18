@@ -9,8 +9,22 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    int n, d;
+    cin >> n >> d;
+    vector<int> arr(n);
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    sort(arr.begin(), arr.end());
+    for (int i = 0; i < n; i++) {
+        if (arr[i] > d) {
+            if (arr[0] + arr[1] > d) {
+                cout << "NO\n";
+                return;
+            }
+        }
+    }
+    cout << "YES\n";
 }
 
 int main() {

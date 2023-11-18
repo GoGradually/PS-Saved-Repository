@@ -8,14 +8,31 @@ const ll MOD = 1000000007LL;
 
 using namespace std;
 
+int gcd(int a, int b) {
+    if (b == 0) return a;
+    return gcd(b, a % b);
+}
+
 void Solve() {
     string str1, str2;
     cin >> str1 >> str2;
-    for (int i = 0; i < str1.size() || i < str2.size(); i++) {
+    if (str1.size() < str2.size()) swap(str1, str2);
+    for (int i = 0; i < str1.size() * str2.size(); i++) {
         int id1 = i % str1.size();
         int id2 = i % str2.size();
-        if()
+        if (str1[id1] != str2[id2]) {
+            cout << -1 << '\n';
+            return;
+        }
     }
+    if (str1.size() % str2.size() == 0) {
+        cout << str1 << '\n';
+        return;
+    }
+    for (int i = 0; i < str2.size() / gcd(str1.size(), str2.size()); i++) {
+        cout << str1;
+    }
+    cout << '\n';
 }
 
 int main() {

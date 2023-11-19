@@ -9,8 +9,47 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    int n, q;
+    cin >> n >> q;
+    string str;
+    cin >> str;
+    int now = 0;
+    vector<int> pre_mn(n + 2, 0), pre_mx(n + 2, 0), ret(n + 2, 0);
+    vector<int> suf_mn(n + 2, 0), suf_mx(n + 2, 0);
+    for (int i = 1; i <= n; i++) {
+        if (str[i - 1] == '+') {
+            now++;
+        } else {
+            now--;
+        }
+        pre_mx[i] = max(pre_mx[i - 1], now);
+        pre_mn[i] = min(pre_mn[i - 1], now);
+        ret[i] = now;
+    }
+    for (int i = n; i >= 1; i--) {
+        int val = 0;
+        if (str[i - 1] == '+') {
+            val++;
+        } else {
+            val--;
+        }
+        suf_mn[i] = min(0, suf_mn[i + 1] + val);
+        suf_mx[i] = max(0, suf_mx[i + 1] + val);
+    }
+
+    for (int i = 0; i < q; i++) {
+        int l, r;
+        cin >> l >> r;
+        now = 0;
+        int pre_min = 0, pre_max = 0, suf_min = 0, suf_max = 0;
+        pre_min = pre_mn[l - 1];
+        pre_max = pre_mx[l - 1];
+        now = ret[l - 1];
+
+        suf_min = now + suf_mn[r + 1];
+        suf_max = now + suf_mx[r + 1];
+        cout << max(pre_max, suf_max) - min(pre_min, suf_min) + 1 << '\n';
+    }
 }
 
 int main() {

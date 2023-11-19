@@ -9,8 +9,15 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    int n, k;
+    cin >> n >> k;
+    for (int i = 1; i < k - (n - k); i++) {
+        cout << i << ' ';
+    }
+    for (int i = k; i >= k - (n - k); i--) {
+        cout << i << ' ';
+    }
+    cout << '\n';
 }
 
 int main() {

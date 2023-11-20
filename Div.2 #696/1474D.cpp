@@ -78,3 +78,4 @@ take notes.
 */
 
 // commit 시 피드백할 것 Message로 남겨두기!!
+// 코드 쓰다가 중요한 부분 까먹지 않기

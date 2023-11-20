@@ -11,6 +11,42 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    vector<int> arr(2 * n);
+    for (int i = 0; i < 2 * n; i++) {
+        cin >> arr[i];
+    }
+    sort(arr.begin(), arr.end());
+    for (int t = 0; t < 2 * n; t++) {
+        multiset<int> ms;
+        for (int i = 0; i < 2 * n; i++) {
+            if (i == t) continue;
+            ms.insert(arr[i]);
+        }
+        vector<pair<int, int> > ans;
+        int now = *ms.rbegin();
+        ans.push_back({arr[t], now});
+        ms.erase(ms.find(now));
+        now = max(arr[t], now);
+        while (!ms.empty()) {
+            int next = *ms.rbegin();
+            ms.erase(ms.find(next));
+            if (ms.count(now - next) == 0) {
+                break;
+            }
+            ms.erase(ms.find(now - next));
+            ans.push_back({now - next, next});
+            now = next;
+        }
+        if (ms.empty()) {
+            cout << "YES\n";
+            cout << ans[0].first + ans[0].second << '\n';
+            for (int i = 0; i < ans.size(); i++) {
+                cout << ans[i].first << ' ' << ans[i].second << '\n';
+            }
+            return;
+        }
+    }
+    cout << "NO\n";
 }
 
 int main() {

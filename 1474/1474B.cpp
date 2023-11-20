@@ -9,8 +9,30 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    ll d;
+    cin >> d;
+    vector<bool> check(50000, true);
+    check[0] = false;
+    for (int i = 2; i < 50000; i++) {
+        if (check[i]) {
+            for (int j = 2; j * i <= 50000; j++) {
+                check[i * j] = false;
+            }
+        }
+    }
+    ll ans = 1;
+    int cnt = 0;
+    for (ll i = 1; i <= 50000; i++) {
+        if (check[i]) {
+            ans *= i;
+            i += d - 1;
+            cnt++;
+        }
+        if (cnt == 3) {
+            break;
+        }
+    }
+    cout << ans << '\n';
 }
 
 int main() {

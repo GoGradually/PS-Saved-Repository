@@ -11,6 +11,20 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    string str;
+    cin >> str;
+    int before = -1;
+    for (int i = 0; i < n; i++) {
+        int now = str[i] - '0';
+        if (now + 1 == before) {
+            cout << 0;
+            before = now;
+        } else {
+            cout << 1;
+            before = now + 1;
+        }
+    }
+    cout << '\n';
 }
 
 int main() {

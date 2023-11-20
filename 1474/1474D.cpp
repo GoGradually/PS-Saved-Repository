@@ -11,6 +11,42 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    vector<ll> arr(n + 2);
+    for (int i = 1; i <= n; i++) {
+        cin >> arr[i];
+    }
+    vector<ll> prefix(n + 2), suffix(n + 2);
+    for (int i = 1; i <= n; i++) {
+        if (prefix[i - 1] < 0) {
+            prefix[i] = prefix[i - 1];
+            continue;
+        }
+        prefix[i] = arr[i] - prefix[i - 1];
+    }
+    for (int i = n; i >= 1; i--) {
+        if (suffix[i + 1] < 0) {
+            suffix[i] = suffix[i + 1];
+            continue;
+        }
+        suffix[i] = arr[i] - suffix[i + 1];
+    }
+
+    for (int i = 0; i <= n; i++) {
+        if (prefix[i] < 0 || suffix[i + 1] < 0) continue;
+        if (prefix[i] == suffix[i + 1]) {
+            cout << "YES\n";
+            return;
+        }
+    }
+    for (int i = 0; i <= n - 2; i++) {
+        if (prefix[i] < 0 || suffix[i + 3] < 0) continue;
+        if (arr[i + 2] - prefix[i] < 0) continue;
+        if (arr[i + 2] - prefix[i] == arr[i + 1] - suffix[i + 3]) {
+            cout << "YES\n";
+            return;
+        }
+    }
+    cout << "NO\n";
 }
 
 int main() {

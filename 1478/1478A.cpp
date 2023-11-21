@@ -11,6 +11,15 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    vector<int> arr(n + 1);
+    int ans = 0;
+    for (int i = 0; i < n; i++) {
+        int temp;
+        cin >> temp;
+        arr[temp]++;
+        ans = max(ans, arr[temp]);
+    }
+    cout << ans << '\n';
 }
 
 int main() {

@@ -8,9 +8,30 @@ const ll MOD = 1000000007LL;
 
 using namespace std;
 
+ll gcd(ll a, ll b) {
+    if (b == 0) return a;
+    return gcd(b, a % b);
+}
 void Solve() {
-    int n;
-    cin >> n;
+    ll n, k;
+    cin >> n >> k;
+    vector<ll> arr(n);
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    sort(arr.begin(), arr.end());
+    for (int i = 1; i < n; i++) {
+        arr[i] -= arr[0];
+    }
+    k -= arr[0];
+    ll d = 0;
+    for (int i = 1; i < n; i++) {
+        d = gcd(d, arr[i]);
+    }
+    if (k % d == 0)
+        cout << "YES\n";
+    else
+        cout << "NO\n";
 }
 
 int main() {
@@ -42,3 +63,4 @@ take notes.
 */
 
 // commit 시 피드백할 것 Message로 남겨두기!!
+// 가장 간단한 경우부터 차례대로 수식으로 정리해보기(수식화)

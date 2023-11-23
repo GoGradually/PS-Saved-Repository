@@ -9,8 +9,48 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
+    ll n;
     cin >> n;
+    vector<ll> arr(n * 2);
+    for (int i = 0; i < n * 2; i++) {
+        cin >> arr[i];
+    }
+    sort(arr.rbegin(), arr.rend());
+
+    if (arr[0] != arr[1]) {
+        cout << "NO\n";
+        return;
+    }
+
+    ll before = 0;
+    if (arr[0] % (n * 2) != 0) {
+        cout << "NO\n";
+        return;
+    }
+    ll allow = arr[0] / (n * 2);
+    before += allow;
+    for (ll i = 2; i < n * 2; i += 2) {
+        if (arr[i] != arr[i + 1]) {
+            cout << "NO\n";
+            return;
+        }
+        arr[i] -= before * 2;
+        if (arr[i] <= 0) {
+            cout << "NO\n";
+            return;
+        }
+        if (arr[i] % (n * 2 - i) != 0) {
+            cout << "NO\n";
+            return;
+        }
+        if (allow <= arr[i] / (n * 2 - i)) {
+            cout << "NO\n";
+            return;
+        }
+        allow = arr[i] / (n * 2 - i);
+        before += allow;
+    }
+    cout << "YES\n";
 }
 
 int main() {

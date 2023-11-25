@@ -11,6 +11,30 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    vector<ll> arr(n), down(n), up(n);
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    for (int i = 0; i < n; i++) {
+        cin >> down[i];
+    }
+    for (int i = 0; i < n; i++) {
+        cin >> up[i];
+    }
+    vector<ll> dp(n + 1);
+    ll ans = 0;
+    dp[0] = 0;
+    for (int i = 1; i < n; i++) {
+        if (down[i] == up[i]) {
+            dp[i] = arr[i] + 1;
+            ans = max(ans, dp[i]);
+            continue;
+        }
+        dp[i] = max(dp[i - 1] - abs(up[i] - down[i]) + arr[i] + 1,
+                    arr[i] + 1 + abs(up[i] - down[i]));
+        ans = max(ans, dp[i]);
+    }
+    cout << ans << '\n';
 }
 
 int main() {

@@ -9,8 +9,22 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    int p, q;
+    cin >> p >> q;
+    string str;
+    cin >> str;
+    int l, r, u, d;
+    l = r = u = d = 0;
+    for (int i = 0; i < str.size(); i++) {
+        if (str[i] == 'L') l--;
+        if (str[i] == 'R') r++;
+        if (str[i] == 'U') u++;
+        if (str[i] == 'D') d--;
+    }
+    if (l <= p && p <= r && d <= q && q <= u)
+        cout << "YES\n";
+    else
+        cout << "NO\n";
 }
 
 int main() {

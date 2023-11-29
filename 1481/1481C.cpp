@@ -9,8 +9,68 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    int n, m;
+    cin >> n >> m;
+    vector<int> arr(n), want(n);
+    vector<int> color(m);
+    map<int, vector<int>> mustColoring;
+    map<int, int> canOverlap, mustColoringIndex;
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    for (int i = 0; i < n; i++) {
+        cin >> want[i];
+        if (arr[i] == want[i]) {
+            canOverlap[arr[i]] = i + 1;
+        } else {
+            mustColoring[want[i]].push_back(i);
+        }
+    }
+    vector<int> ans(m);
+    stack<int> stk;
+    for (int i = 0; i < m; i++) {
+        cin >> color[i];
+        if (mustColoringIndex[color[i]] == mustColoring[color[i]].size()) {
+            if (mustColoringIndex[color[i]] == 0 && canOverlap[color[i]] == 0) {
+                stk.push(i);
+            } else {
+                if (canOverlap[color[i]] != 0) {
+                    ans[i] = canOverlap[color[i]] - 1;
+                    while (!stk.empty()) {
+                        ans[stk.top()] = ans[i];
+                        stk.pop();
+                    }
+                } else {
+                    ans[i] = mustColoring[color[i]].back();
+                    while (!stk.empty()) {
+                        ans[stk.top()] = ans[i];
+                        stk.pop();
+                    }
+                }
+            }
+        } else {
+            ans[i] = mustColoring[color[i]][mustColoringIndex[color[i]]++];
+            while (!stk.empty()) {
+                ans[stk.top()] = ans[i];
+                stk.pop();
+            }
+        }
+    }
+    if (!stk.empty()) {
+        cout << "NO\n";
+        return;
+    }
+    for (int i = 1; i <= n; i++) {
+        if (mustColoring[i].size() != mustColoringIndex[i]) {
+            cout << "NO\n";
+            return;
+        }
+    }
+    cout << "YES\n";
+    for (int i = 0; i < m; i++) {
+        cout << ans[i] + 1 << ' ';
+    }
+    cout << '\n';
 }
 
 int main() {

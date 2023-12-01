@@ -9,8 +9,30 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    ll A, B, n;
+    cin >> A >> B >> n;
+    ll mx = 0;
+    vector<ll> a(n), b(n);
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+    for (int i = 0; i < n; i++) {
+        cin >> b[i];
+    }
+
+    for (int i = 0; i < n; i++) {
+        mx = max(a[i], mx);
+        ll val = b[i] / A;
+        if (b[i] % A != 0) {
+            val += 1;
+        }
+        B -= val * a[i];
+    }
+    B += mx;
+    if (B > 0)
+        cout << "YES\n";
+    else
+        cout << "NO\n";
 }
 
 int main() {

@@ -11,6 +11,43 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    vector<int> arr(n * 2);
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+        arr[i + n] = arr[i];
+    }
+    if (n == 1) {
+        cout << 0 << '\n';
+        return;
+    }
+    int cnt = 1;
+    int ans = INF;
+    for (int i = 2 * n - 2; i >= 0; i--) {
+        if (arr[i] <= arr[i + 1])
+            cnt++;
+        else
+            cnt = 1;
+        if (cnt >= n) {
+            ans = min(ans, n - i);
+            ans = min(ans, 2 + i);
+        }
+    }
+    cnt = 1;
+    reverse(arr.begin(), arr.end());
+    for (int i = 2 * n - 2; i >= 0; i--) {
+        if (arr[i] <= arr[i + 1])
+            cnt++;
+        else
+            cnt = 1;
+        if (cnt >= n) {
+            ans = min(ans, n - i + 1);
+            ans = min(ans, i + 1);
+        }
+    }
+    if (ans == INF)
+        cout << -1 << '\n';
+    else
+        cout << ans << '\n';
 }
 
 int main() {

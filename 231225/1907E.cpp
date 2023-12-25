@@ -8,9 +8,16 @@ const ll MOD = 1000000007LL;
 
 using namespace std;
 
+ll val[10];
 void Solve() {
     int n;
     cin >> n;
+    ll ret = 1;
+    while (n > 0) {
+        ret *= val[n % 10];
+        n /= 10;
+    }
+    cout << ret << '\n';
 }
 
 int main() {
@@ -18,6 +25,16 @@ int main() {
     cin.tie(nullptr);
     int T = 1;
     cin >> T;
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 10; j++) {
+            for (int k = 0; k < 10; k++) {
+                if (i + j + k < 10) {
+                    val[i + j + k]++;
+                }
+            }
+        }
+    }
+
     while (T--) Solve();
     return 0;
 }

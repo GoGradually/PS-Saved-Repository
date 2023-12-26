@@ -9,15 +9,49 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    int n, q;
+    cin >> n >> q;
+    vector<ll> origin(n);
+    for (int i = 0; i < n; i++) {
+        cin >> origin[i];
+    }
+    while (q--) {
+        ll k;
+        cin >> k;
+        vector<ll> arr(n);
+        for (int i = 0; i < n; i++) {
+            arr[i] = origin[i];
+        }
+
+        ll tag = (1LL << 61);
+        ll ans = 0;
+        while (tag > 0 && k >= 0) {
+            ll req = 0;
+            for (int i = 0; i < n; i++) {
+                if (tag & arr[i]) continue;
+                req += tag - arr[i] % tag;
+                if (req > k) break;
+            }
+            if (k - req >= 0) {
+                for (int i = 0; i < n; i++) {
+                    if (tag & arr[i]) continue;
+                    arr[i] += tag - arr[i] % tag;
+                }
+
+                k -= req;
+                ans += tag;
+            } else {
+            }
+            tag >>= 1;
+        }
+        cout << ans << '\n';
+    }
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
     int T = 1;
-    cin >> T;
     while (T--) Solve();
     return 0;
 }

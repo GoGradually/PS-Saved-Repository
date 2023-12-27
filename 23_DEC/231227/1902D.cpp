@@ -39,7 +39,8 @@ int main() {
 
 /*
 take notes.
-
+1. map<vector<int>, vector<int>> 의 공간복잡도 거품 부수기
+2. 한가지 입력을 두가지 방식으로 저장해두기
 */
 
 // commit 시 피드백할 것 Message로 남겨두기!!

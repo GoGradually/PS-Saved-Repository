@@ -11,6 +11,7 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    ;
 }
 
 int main() {

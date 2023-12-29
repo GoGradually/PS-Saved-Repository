@@ -11,13 +11,69 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    vector<ll> arr(n);
+    ll max_index = 0;
+    ll max_value = 0;
+    for (ll i = 0; i < n; i++) {
+        cin >> arr[i];
+        if (max_value < arr[i]) {
+            max_value = arr[i];
+            max_index = i;
+        }
+    }
+    ll left = 0, right = lINF;
+    auto f = [&](ll val) {
+        bool ret = false;
+        bool check = true;
+        for (int i = 0; i < n; i++) {
+            if (arr[i] > val - i) {
+                check = false;
+            }
+        }
+        if (check) ret = true;
+        check = true;
+        for (int i = 0; i < n; i++) {
+            if (arr[n - 1 - i] > val - i) {
+                check = false;
+            }
+        }
+        if (check) ret = true;
+        check = true;
+
+        for (int i = 0; i < n; i++) {
+            if (i < max_index) {
+                if (arr[i] > val - (n - i - 1)) {
+                    check = false;
+                }
+            } else if (i > max_index) {
+                if (arr[i] > val - i) {
+                    check = false;
+                }
+            } else {
+                if (arr[i] > val) {
+                    check = false;
+                }
+            }
+        }
+
+        if (check) ret = true;
+        return ret;
+    };
+    while (left <= right) {
+        ll mid = (left + right) / 2;
+        if (f(mid)) {
+            right = mid - 1;
+        } else {
+            left = mid + 1;
+        }
+    }
+    cout << left << '\n';
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
     int T = 1;
-    cin >> T;
     while (T--) Solve();
     return 0;
 }
@@ -38,7 +94,7 @@ int main() {
 
 /*
 take notes.
-
+최댓값, 최댓값 왼쪽, 최댓값 오른쪽
 */
 
 // commit 시 피드백할 것 Message로 남겨두기!!

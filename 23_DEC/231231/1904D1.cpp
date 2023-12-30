@@ -11,6 +11,32 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    vector<int> arr(n), dest(n);
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    priority_queue<pair<int, int>> pq;
+    for (int i = 0; i < n; i++) {
+        cin >> dest[i];
+        if (dest[i] != arr[i]) {
+            pq.push({-dest[i], i});
+        }
+    }
+    while (!pq.empty()) {
+        int nowDest, index;
+        tie(nowDest, index) = pq.top();
+        pq.pop();
+        int left = index, right = index;
+        for (int i = index + 1; i < n; i++) {
+            if (dest[i - 1] > dest[i]) {
+                break;
+            }
+            if(arr[i] == dest[index]) {
+                right = i;
+                break;
+            }
+        }
+    }
 }
 
 int main() {

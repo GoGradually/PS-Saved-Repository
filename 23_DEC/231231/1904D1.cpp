@@ -73,6 +73,7 @@ take notes.
 
 dest 의 V자 형태
 dest가 자기보다 작은쪽으로는 못감
++ arr이 dest보다 크면 안됨
 */
 
 // commit 시 피드백할 것 Message로 남겨두기!!

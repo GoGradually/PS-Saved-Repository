@@ -11,32 +11,38 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
-    vector<int> arr(n), dest(n);
+    vector<int> arr(n);
     for (int i = 0; i < n; i++) {
         cin >> arr[i];
     }
-    priority_queue<pair<int, int>> pq;
+    vector<int> dest(n);
     for (int i = 0; i < n; i++) {
         cin >> dest[i];
-        if (dest[i] != arr[i]) {
-            pq.push({-dest[i], i});
-        }
     }
-    while (!pq.empty()) {
-        int nowDest, index;
-        tie(nowDest, index) = pq.top();
-        pq.pop();
-        int left = index, right = index;
-        for (int i = index + 1; i < n; i++) {
-            if (dest[i - 1] > dest[i]) {
-                break;
-            }
-            if(arr[i] == dest[index]) {
-                right = i;
+    vector<bool> check(n);
+    for (int i = 0; i < n; i++) {
+        bool ok = false;
+        for (int j = i; j < n; j++) {
+            if (dest[i] <= dest[j] && dest[i] >= arr[j]) {
+                if (arr[j] == dest[i]) ok = true;
+            } else {
                 break;
             }
         }
+
+        for (int j = i; j >= 0; j--) {
+            if (dest[i] <= dest[j] && dest[i] >= arr[j]) {
+                if (arr[j] == dest[i]) ok = true;
+            } else {
+                break;
+            }
+        }
+        if (!ok) {
+            cout << "NO\n";
+            return;
+        }
     }
+    cout << "YES\n";
 }
 
 int main() {
@@ -65,6 +71,8 @@ int main() {
 /*
 take notes.
 
+dest 의 V자 형태
+dest가 자기보다 작은쪽으로는 못감
 */
 
 // commit 시 피드백할 것 Message로 남겨두기!!

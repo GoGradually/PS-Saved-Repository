@@ -8,86 +8,50 @@ const ll MOD = 1000000007LL;
 
 using namespace std;
 
-vector<int> arr;
-
-template <class T>
-class segment_tree {
-   private:
-    vector<T> tree;
-
-   public:
-    segment_tree(int n) { tree.resize(4 * n); }
-    T cal(T val1, T val2) { return max(val1, val2); }
-    void update(int node, int left, int right, int x, T y) {
-        if (left > x || right < x) return;
-        if (left == right) {
-            tree[node] = y;
-            return;
-        }
-        int mid = (left + right) / 2;
-        update(node * 2, left, mid, x, y);
-        update(node * 2 + 1, mid + 1, right, x, y);
-        tree[node] = cal(tree[node * 2], tree[node * 2 + 1]);
-    }
-    T query(int node, int left, int right, int x, int y) {
-        if (x > right || y < left) return 0;
-        if (x <= left && right <= y) return tree[node];
-        int mid = (left + right) / 2;
-        int lVal = query(node * 2, left, mid, x, y);
-        int rVal = query(node * 2 + 1, mid + 1, right, x, y);
-        return cal(lVal, rVal);
-    }
-};
-
 void Solve() {
     int n;
     cin >> n;
-    arr.resize(n);
-    segment_tree<int> seg_tree(n);
-    priority_queue<pair<int, int>> pq;
+    vector<int> arr(n);
     for (int i = 0; i < n; i++) {
         cin >> arr[i];
-        seg_tree.update(1, 0, n - 1, i, arr[i]);
     }
     vector<int> dest(n);
     for (int i = 0; i < n; i++) {
         cin >> dest[i];
-        pq.push({-dest[i], i});
     }
-    while (!pq.empty()) {
-        int index, nowDest;
-        tie(nowDest, index) = pq.top();
-        pq.pop();
-        bool ok = false;
-        nowDest *= -1;
-        int left = 0, right = index;
-        while (left <= right) {
-            int mid = (left + right) / 2;
-            if (seg_tree.query(1, 0, n - 1, mid, index) >= dest[index]) {
-                left = mid + 1;
+    vector<int> pre(n), suf(n);
+    stack<int> stk;
+    for (int i = 0; i < n; i++) {
+        while (!stk.empty()) {
+            if (dest[stk.top()] > dest[i] || dest[stk.top()] < arr[i]) {
+                suf[stk.top()] = i - 1;
+                stk.pop();
             } else {
-                right = mid - 1;
+                break;
             }
         }
-        if (right >= 0 &&
-            seg_tree.query(1, 0, n - 1, right, index) == dest[index]) {
-            ok = true;
-        }
-        left = index, right = n - 1;
-
-        while (left <= right) {
-            int mid = (left + right) / 2;
-            if (seg_tree.query(1, 0, n - 1, index, mid) >= dest[index]) {
-                right = mid - 1;
+        stk.push(i);
+    }
+    while (!stk.empty()) {
+        stk.pop();
+    }
+    for (int i = n - 1; i >= 0; i--) {
+        while (!stk.empty()) {
+            if (dest[stk.top()] > dest[i] || dest[stk.top()] < arr[i]) {
+                pre[stk.top()] = i + 1;
+                stk.pop();
             } else {
-                left = mid + 1;
+                break;
             }
         }
-        if (left < n &&
-            seg_tree.query(1, 0, n - 1, index, left) == dest[index]) {
-            ok = true;
-        }
-        if (!ok) {
+        stk.push(i);
+    }
+    while (!stk.empty()) {
+        stk.pop();
+    }
+    for (int i = 0; i < n; i++) {
+        cout << pre[i] << ' ' << suf[i] << '\n';
+        if (!(arr[pre[i]] == dest[i] || arr[suf[i]] == dest[i])) {
             cout << "NO\n";
             return;
         }

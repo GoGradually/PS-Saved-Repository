@@ -9,8 +9,27 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    int n, q;
+    cin >> n >> q;
+    int mx = 0;
+    vector<int> di(q);
+    for (int i = 0; i < q; i++) {
+        cin >> di[i];
+        mx = max(mx, di[i]);
+    }
+    for (int i = 0; i < n - 1; i++) {
+        cout << i + 1 << ' ' << i + 2 << '\n';
+    }
+    int before = n - 1;
+    for (int i = 0; i < q; i++) {
+        if (before == di[i]) {
+            cout << -1 << ' ' << -1 << ' ' << -1 << '\n';
+
+        } else {
+            cout << n << ' ' << before << ' ' << di[i] << '\n';
+            before = di[i];
+        }
+    }
 }
 
 int main() {

@@ -11,6 +11,20 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    vector<int> a(n), b(n);
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+    ll ans = 0;
+    for (int i = 0; i < n; i++) {
+        cin >> b[i];
+        if (a[i] > b[i]) swap(a[i], b[i]);
+        ans += b[i] - a[i];
+    }
+    sort(a.begin(), a.end());
+    sort(b.begin(), b.end());
+    if (a[n - 1] - b[0] > 0) ans += (a[n - 1] - b[0]) * 2;
+    cout << ans << '\n';
 }
 
 int main() {

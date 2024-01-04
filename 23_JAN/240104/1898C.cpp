@@ -9,8 +9,88 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    int n, m, k;
+    cin >> n >> m >> k;
+    vector<vector<char>> horizon(n, vector<char>(m - 1, 'R'));
+    vector<vector<char>> vertical(n - 1, vector<char>(m, 'R'));
+    if ((n + m - 2) % 4 == k % 4) {
+        if ((n + m - 2) / 4 <= k / 4) {
+            cout << "YES\n";
+            vertical[0][0] = 'B';
+            vertical[0][1] = 'B';
+            int cnt = 1;
+            int index = 1;
+            while (index < m - 1) {
+                if (cnt == 1) {
+                    horizon[0][index] = 'B';
+                }
+                cnt = 1 - cnt;
+                index++;
+            }
+            index = 0;
+            while (index < n - 1) {
+                if (cnt == 1) {
+                    vertical[index][m - 1] = 'B';
+                }
+                cnt = 1 - cnt;
+                index++;
+            }
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < m - 1; j++) {
+                    cout << horizon[i][j] << ' ';
+                }
+                cout << '\n';
+            }
+            for (int i = 0; i < n - 1; i++) {
+                for (int j = 0; j < m; j++) {
+                    cout << vertical[i][j] << ' ';
+                }
+                cout << '\n';
+            }
+
+        } else {
+            cout << "NO\n";
+        }
+    } else if ((n + m) % 4 == k % 4) {
+        if ((n + m) / 4 <= k / 4) {
+            cout << "YES\n";
+            horizon[0][0] = 'B';
+            horizon[1][0] = 'B';
+            int cnt = 1;
+            int index = 1;
+            while (index < m - 1) {
+                if (cnt == 1) {
+                    horizon[0][index] = 'B';
+                }
+                cnt = 1 - cnt;
+                index++;
+            }
+            index = 0;
+            while (index < n - 1) {
+                if (cnt == 1) {
+                    vertical[index][m - 1] = 'B';
+                }
+                cnt = 1 - cnt;
+                index++;
+            }
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < m - 1; j++) {
+                    cout << horizon[i][j] << ' ';
+                }
+                cout << '\n';
+            }
+            for (int i = 0; i < n - 1; i++) {
+                for (int j = 0; j < m; j++) {
+                    cout << vertical[i][j] << ' ';
+                }
+                cout << '\n';
+            }
+        } else {
+            cout << "NO\n";
+        }
+    } else {
+        cout << "NO\n";
+    }
 }
 
 int main() {

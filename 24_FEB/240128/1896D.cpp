@@ -15,6 +15,16 @@ void Solve() {
     for (int i = 0; i < n; i++) {
         cin >> arr[i];
     }
+    while (q--) {
+        int tag;
+        cin >> tag;
+        if (tag == 1) {
+        } else {
+            int index, change;
+            cin >> index >> change;
+            arr[index - 1] = change;
+        }
+    }
 }
 
 int main() {
@@ -44,7 +54,11 @@ int main() {
 take notes.
 // 다시 보는용이 아닌
 // 현재의 흐름을 가장 잘 이어갈 수 있도록 !!!
-
+패리티는 무조건 맞출 수 있다
+패리티 1일때 max값과
+패리티 0일때 max값 계산해두기
+가장 가까운 1의 위치가
+반대 패리티의 max값 결정한다?
 */
 
 // commit 시 피드백할 것 Message로 남겨두기!!

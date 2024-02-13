@@ -12,17 +12,48 @@ void Solve() {
     int n, q;
     cin >> n >> q;
     vector<int> arr(n);
+    set<int> s;
     for (int i = 0; i < n; i++) {
         cin >> arr[i];
+        if (arr[i] == 1) s.insert(i);
     }
     while (q--) {
         int tag;
         cin >> tag;
         if (tag == 1) {
+            int val;
+            cin >> val;
+            if (s.size() == 0) {
+                if (val <= n * 2 && val % 2 == 0) {
+                    cout << "YES\n";
+                } else {
+                    cout << "NO\n";
+                }
+                continue;
+            }
+            int s1 = n * 2 - s.size();
+            int s2 = max(n * 2 - (*s.begin()) * 2 - 1,
+                         n * 2 - (n - (*s.rbegin())) * 2 - 1);
+            if (val % 2 == s1 % 2) {
+                if (val <= s1)
+                    cout << "YES\n";
+                else
+                    cout << "NO\n";
+            } else if (val % 2 == s2 % 2) {
+                if (val <= s2)
+                    cout << "YES\n";
+                else
+                    cout << "NO\n";
+            }
         } else {
             int index, change;
             cin >> index >> change;
-            arr[index - 1] = change;
+            if (arr[index - 1] == change) continue;
+            if (change == 1) {
+                s.insert(index - 1);
+            } else {
+                s.erase(s.find(index - 1));
+            }
         }
     }
 }
@@ -59,6 +90,12 @@ take notes.
 패리티 0일때 max값 계산해두기
 가장 가까운 1의 위치가
 반대 패리티의 max값 결정한다?
+최댓값 저장하는 방법
+우선순위큐를 이용한다?전체 부호가 달라진다
+기존 max가 반대편 max로 이동하고
+반대편 max는 새로 계산되는데
+
+set을 이용한 count 하여 최댓값에 빼서 계산하는 구현
 */
 
 // commit 시 피드백할 것 Message로 남겨두기!!

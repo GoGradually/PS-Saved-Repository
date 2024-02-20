@@ -11,18 +11,29 @@ using namespace std;
 void Solve() {
     ll n, x;
     cin >> n >> x;
+    set<ll> s;
+    for (int i = 1; i * i <= n - x; i++) {
+        if ((n - x) % i == 0) {
+            if (i % 2 == 0) s.insert(i);
+            if (((n - x) / i) % 2 == 0) s.insert((n - x) / i);
+        }
+    }
+    for (int i = 1; i * i <= n + x - 2; i++) {
+        if ((n + x - 2) % i == 0) {
+            if (i % 2 == 0) s.insert(i);
+            if (((n + x - 2) / i) % 2 == 0) s.insert((n + x - 2) / i);
+        }
+    }
+    vector<ll> k;
+    for (auto &&i : s) {
+        k.push_back(i / 2 + 1);
+    }
+
     int ans = 0;
-    set<int> s;
-    for (int i = 2; i * i < n - x; i += 2) {
-        if (x <= (i + 2) / 2 && (n - x) % i == 0) {
-            ans++;
-        }
+    for (auto &&i : k) {
+        if (i >= x) ans++;
     }
-    for (int i = 2; i * i < n + x - 2; i += 2) {
-        if (x <= (i + 2) / 2 && (n + x - 2) % i == 0) {
-            ans++;
-        }
-    }
+
     cout << ans << '\n';
 }
 
@@ -69,11 +80,12 @@ k     2 3 4 5 6  7  8
 
 (n-x) = (2k-2)t
 (n+x-2) = (2k-2)*(t+1)
+저걸로 나누어 떨어지는 값만 가능
 
 
 
 1. 모듈러 연산 % 그대로 놔두지 말고 임의의 음이 아닌 정수 * x 로 표현하기
-2. 체계적인 상태를 유지하기
+2. 조건문 만들 때 병렬적으로 조건문 짜기 (하나 먼저 우선 깊게 들어가면 실수 가능성 높음)
 */
 
 // commit 시 피드백할 것 Message로 남겨두기!!

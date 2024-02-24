@@ -114,6 +114,7 @@ take notes.
 
 1 3 5 2 6 4
 6 3 5 2 1 4
+막막할떈 {greedy, D&C, DP, graph, math} 하나씩 무조건 대입해보기
 */
 
 // commit 시 피드백할 것 Message로 남겨두기!!

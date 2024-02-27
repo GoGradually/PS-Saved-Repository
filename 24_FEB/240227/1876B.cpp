@@ -2,7 +2,7 @@
 #define ll long long
 #define INF (int)1e9 + 10
 #define lINF (ll)1e18 + 10LL
-const ll MOD = 1000000007LL;
+const ll MOD = 998244353LL;
 // #include <atcoder/modint.hpp>
 // using mint = atcoder::modint998244353;
 
@@ -11,13 +11,75 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    vector<ll> arr(n);
+    map<int, vector<int>> mp;
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+        mp[arr[i]].push_back(i + 1);
+    }
+    vector<set<int>> index(n + 1);
+    set<int> remain;
+    for (int i = 1; i <= n; i++) {
+        remain.insert(i);
+        for (int j = 1; j * j <= i; j++) {
+            if (i % j == 0) {
+                index[i].insert(j);
+                index[i].insert(i / j);
+            }
+        }
+    }
+    ll ans = 0;
+    for (auto it = mp.rbegin(); it != mp.rend(); it++) {
+        set<int> now;
+        for (int i = 0; i < it->second.size(); i++) {
+            for (auto &&j : index[it->second[i]]) {
+                if (remain.find(j) != remain.end()) {
+                    now.insert(j);
+                    remain.erase(j);
+                }
+            }
+        }
+        ll val = arr[it->second[0] - 1];
+        // 2^남은 수 * (2^현재 가능 수 - 1) * val
+        ll val1 = 1;
+        ll tag = remain.size();
+        ll a = 2;
+        while (tag > 0) {
+            if (tag & 1) {
+                val1 *= a;
+                val1 %= MOD;
+            }
+            a *= a;
+            a %= MOD;
+            tag /= 2;
+        }
+        val *= val1;
+        val %= MOD;
+        val1 = 1;
+        tag = now.size();
+        a = 2;
+        while (tag > 0) {
+            if (tag & 1) {
+                val1 *= a;
+                val1 %= MOD;
+            }
+            a *= a;
+            a %= MOD;
+            tag /= 2;
+        }
+        val1--;
+        val *= val1;
+        val %= MOD;
+        ans += val;
+        ans %= MOD;
+    }
+    cout << ans << '\n';
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
     int T = 1;
-    cin >> T;
     while (T--) Solve();
     return 0;
 }

@@ -8,9 +8,25 @@ const ll MOD = 1000000007LL;
 
 using namespace std;
 
+ll gcd(ll a, ll b) {
+    if (b == 0) return a;
+    return gcd(b, a % b);
+}
+
 void Solve() {
-    int n;
-    cin >> n;
+    ll a, b, c, d;
+    cin >> a >> b >> c >> d;
+    ll ab = a * b;
+    for (ll x = a + 1; x <= c; x++) {
+        ll gcdabx = gcd(ab, x);
+        ll val = ab / gcdabx;
+        ll y = d / val * val;
+        if (y > b) {
+            cout << x << ' ' << y << '\n';
+            return;
+        }
+    }
+    cout << -1 << ' ' << -1 << '\n';
 }
 
 int main() {
@@ -54,9 +70,7 @@ a약수 하나 빼고 더 큰수 곱하면 x > a
 2. 그렇다는 것은 y는 ab / x 한 값의 배수이다.
 3. ab/x = ab/gcd(ab, x)/x/gcd(ab,x)
 
-1. a/gcd(a, b)
-2. gcd(a, b)
-3. lcm(a, b)
+
 
 */
 

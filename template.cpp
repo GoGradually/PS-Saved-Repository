@@ -37,7 +37,7 @@ int main() {
 // 1. "추론"(문제 특징의 "증명"으로 아이디어)
 // {BruteForce, greedy, D&C, DP, graph, math}
 // 2. "처음"부터 직접 경우의 수 전개(수식&도식화)
-// 3. cutting | 구현(차근차근 단순화)
+// 3. cutting | 구현(차근차근 단순화 & 최적화)
 
 /*
 take notes.

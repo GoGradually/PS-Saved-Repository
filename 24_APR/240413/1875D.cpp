@@ -11,6 +11,29 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    vector<int> arr(5001);
+    for (int i = 0; i < n; i++) {
+        int temp;
+        cin >> temp;
+        if (temp > n) continue;
+        arr[temp]++;
+    }
+    vector<pair<ll, ll>> minVal(n + 1, {INF, n});
+    vector<ll> dp(n + 1, lINF);
+    for (int i = 0; i <= n; i++) {
+        if (arr[i] == 0) {
+            minVal[0] = {0, i};
+            dp[i] = 0;
+            break;
+        }
+    }
+    for (int i = minVal[0].second - 1; i >= 0; i--) {
+        for (int j = n; j > i; j--) {
+            dp[i] = min(dp[i], dp[j] + (arr[i] - 1) * j + i);
+        }
+    }
+
+    cout << dp[0] << '\n';
 }
 
 int main() {
@@ -45,7 +68,18 @@ take notes.
 // 현재의 흐름을 가장 잘 이어갈 수 있도록 !!!
 
 현재 상태에서 x를 제거했을 때 최소비용
+현재 x, i, round 3중for문
+반드시 해당 i값을 알아야 계산할 수 있나?
+arr[x] - 1 값이 고정
+i값은 그냥 최소값 찾아 쓰면 될거같은데
+for(int i = x + 1; i<=n; i++){
+    dp[x][round] = dp[i][round - arr[x]] + (arr[x] - 1) * i + x
+}
 
+모든 정보를 다 담는게 아닌
+진짜 "계산값에 종속적인 변수" 가 뭔지를 파악해야 한다.
+카데인에 너무 매몰되지 말고
+독립과 종속의 파악
 */
 
 // commit 시 피드백할 것 Message로 남겨두기!!

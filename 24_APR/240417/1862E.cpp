@@ -17,11 +17,22 @@ void Solve() {
         cin >> arr[i];
     }
     priority_queue<ll, vector<ll>, greater<ll>> pq;
+    ll penalty = 0;
+    ll ans = 0;
+    ll val = 0;
     for (int i = 0; i < n; i++) {
         if (arr[i] > 0) {
+            ll newPenalty = d * (i + 1);
+            ll newVal = val + arr[i];
+            if (pq.size() == m) newVal -= pq.top();
+            val = newVal;
+            penalty = newPenalty;
+            if (pq.size() == m) pq.pop();
             pq.push(arr[i]);
         }
+        ans = max(ans, val - penalty);
     }
+    cout << ans << '\n';
 }
 
 int main() {
@@ -70,7 +81,11 @@ n^2
 
 누적합으로 분리? -d -d x=0 -d -d -d -d x=0
 시간별로 데이터가 깎이니까
-문제 알고리즘, 특징의 증명으로 아이디어 찾아야 한다.
+1. 문제 알고리즘, 특징의 증명으로 아이디어 찾아야 한다.
+2. 분기 경우의 수 직접 전개
+2가지 조건
+박힌돌이 이득
+기존돌이 이득
 */
 
 // commit 시 피드백할 것 Message로 남겨두기!!

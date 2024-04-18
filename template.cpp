@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 #define ll long long
-#define INF (int)1e9 + 10
-#define lINF (ll)1e18 + 10LL
+#define INF ((int)1e9 + 10)
+#define lINF ((ll)1e18 + 10LL)
 const ll MOD = 1000000007LL;
 // #include <atcoder/modint.hpp>
 // using mint = atcoder::modint998244353;

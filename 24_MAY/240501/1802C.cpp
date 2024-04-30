@@ -1,0 +1,102 @@
+#include <bits/stdc++.h>
+#define ll long long
+#define INF ((int)1e9 + 10)
+#define lINF ((ll)1e18 + 10LL)
+const ll MOD = 1000000007LL;
+// #include <atcoder/modint.hpp>
+// using mint = atcoder::modint998244353;
+
+using namespace std;
+
+void Solve() {
+    int n, m;
+    cin >> n >> m;
+    cout << n * m << '\n';
+    vector<vector<ll>> arr(n + 15, vector<ll>(m + 15));
+
+    vector<int> prev_perm(16, 0);
+    prev_perm[0] = 1;
+    prev_perm[1] = 1;
+    prev_perm[2] = 1;
+    prev_perm[3] = 1;
+    for (int i = 0; i <= n / 4; i++) {
+        for (int j = 0; j <= m / 4; j++) {
+            ll cnt = 0;
+            for (int i = 0; i < 16; i++) {
+                if (prev_perm[i] == 1) {
+                    cnt |= (1 << (i + 16));
+                }
+            }
+
+            if ((i + j) % 4 == 0) {
+                arr[i * 4][j * 4] = cnt;
+                arr[i * 4][j * 4 + 1] = cnt + (1 << 1);
+                arr[i * 4 + 1][j * 4] = cnt + (1 << 2);
+                arr[i * 4 + 1][j * 4 + 1] = cnt + (1 << 3);
+
+                arr[i * 4 + 2][j * 4 + 2] = cnt;
+                arr[i * 4 + 2][j * 4 + 3] = cnt + (1 << 1);
+                arr[i * 4 + 3][j * 4 + 2] = cnt + (1 << 2);
+                arr[i * 4 + 3][j * 4 + 3] = cnt + (1 << 3);
+            } else if ((i + j) % 4 == 1) {
+                arr[i * 4][j * 4] = cnt + (1 << 4);
+                arr[i * 4][j * 4 + 1] = cnt + (1 << 5);
+                arr[i * 4 + 1][j * 4] = cnt + (1 << 6);
+                arr[i * 4 + 1][j * 4 + 1] = cnt + (1 << 7);
+
+                arr[i * 4 + 2][j * 4 + 2] = cnt + (1 << 4);
+                arr[i * 4 + 2][j * 4 + 3] = cnt + (1 << 5);
+                arr[i * 4 + 3][j * 4 + 2] = cnt + (1 << 6);
+                arr[i * 4 + 3][j * 4 + 3] = cnt + (1 << 7);
+            }
+            prev_permutation(prev_perm.begin(), prev_perm.end());
+        }
+    }
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            cout << arr[i][j] << ' ';
+        }
+        cout << '\n';
+    }
+}
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int T = 1;
+    cin >> T;
+    while (T--) Solve();
+    return 0;
+}
+
+/*
+찾아야 할 것들
+1. int 오버플로우, out of bounds
+2. 특수한 경우(n=1?)
+3. 잘못된 가정 & 증명
+
+*아무것도 하지 않는 대신 무언가를 수행하기. 체계적인 상태를 유지.
+*적어두기, 구하고자 하는 것의 계층구조 표현하기.
+*한가지 접근 방식에 얽메이지 말기
+*/
+// 알고리즘의 작동방식 "완전히" 이해하려 노력하기
+// 수행 목표
+// 1. "추론"(문제 알고리즘/특징의 "증명"으로 아이디어)
+// {BruteForce, greedy, D&C, DP, graph, math}
+// 2. "처음"부터 직접 경우의 수 전개(수식&도식화)
+// 3. 가장 Naive한 알고리즘부터 시작하기 (완전 탐색, 단순 자료구조)
+// 4. cutting | 구현(차근차근 단순화 & 최적화)
+
+/*
+take notes.
+// 다시 보는용이 아닌
+// 현재의 흐름을 가장 잘 이어갈 수 있도록 !!!
+
+n < 200
+m < 200
+2 ^ 16 = 6만
+
+*/
+
+// commit 시 피드백할 것 Message로 남겨두기!!
+// 틀리면 느낌표 추가하기

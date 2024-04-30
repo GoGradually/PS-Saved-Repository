@@ -15,42 +15,17 @@ void Solve() {
     vector<vector<ll>> arr(n + 15, vector<ll>(m + 15));
 
     vector<int> prev_perm(16, 0);
-    prev_perm[0] = 1;
-    prev_perm[1] = 1;
-    prev_perm[2] = 1;
-    prev_perm[3] = 1;
-    for (int i = 0; i <= n / 4; i++) {
-        for (int j = 0; j <= m / 4; j++) {
-            ll cnt = 0;
-            for (int i = 0; i < 16; i++) {
-                if (prev_perm[i] == 1) {
-                    cnt |= (1 << (i + 16));
-                }
-            }
-
-            if ((i + j) % 4 == 0) {
-                arr[i * 4][j * 4] = cnt;
-                arr[i * 4][j * 4 + 1] = cnt + (1 << 1);
-                arr[i * 4 + 1][j * 4] = cnt + (1 << 2);
-                arr[i * 4 + 1][j * 4 + 1] = cnt + (1 << 3);
-
-                arr[i * 4 + 2][j * 4 + 2] = cnt;
-                arr[i * 4 + 2][j * 4 + 3] = cnt + (1 << 1);
-                arr[i * 4 + 3][j * 4 + 2] = cnt + (1 << 2);
-                arr[i * 4 + 3][j * 4 + 3] = cnt + (1 << 3);
-            } else if ((i + j) % 4 == 1) {
-                arr[i * 4][j * 4] = cnt + (1 << 4);
-                arr[i * 4][j * 4 + 1] = cnt + (1 << 5);
-                arr[i * 4 + 1][j * 4] = cnt + (1 << 6);
-                arr[i * 4 + 1][j * 4 + 1] = cnt + (1 << 7);
-
-                arr[i * 4 + 2][j * 4 + 2] = cnt + (1 << 4);
-                arr[i * 4 + 2][j * 4 + 3] = cnt + (1 << 5);
-                arr[i * 4 + 3][j * 4 + 2] = cnt + (1 << 6);
-                arr[i * 4 + 3][j * 4 + 3] = cnt + (1 << 7);
-            }
-            prev_permutation(prev_perm.begin(), prev_perm.end());
+    ll cnt = 0;
+    for (int i = 0; i <= n / 2; i++) {
+        for (int j = 0; j <= m / 2; j++) {
+            arr[i * 2][j * 2] = cnt;
+            arr[i * 2][j * 2 + 1] = cnt + 1;
+            arr[i * 2 + 1][j * 2] = cnt + 2;
+            arr[i * 2 + 1][j * 2 + 1] = cnt + 3;
+            cnt += 4;
         }
+        cnt -= 4 * (m / 2 + 1);
+        cnt += (1 << 20);
     }
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {

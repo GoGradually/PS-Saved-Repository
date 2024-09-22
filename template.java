@@ -1,22 +1,25 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.*;
 
-//Change to Main Class
+//Change Class Name to Problem Name
 public class template {
     public static void main(String[] args) throws IOException {
-        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-        int test = Integer.parseInt(bf.readLine());
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int test = Integer.parseInt(br.readLine());
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         for (int i = 0; i < test; i++) {
-            run(bf);
+            run(br, bw);
+            bw.flush();
         }
     }
 
-    public static void run(BufferedReader bf) throws IOException{
-        Integer n = Integer.parseInt(bf.readLine());
-        System.out.println(n);
-        String line = bf.readLine();
+    public static void run(BufferedReader br, BufferedWriter bw) throws IOException{
+        Integer n = Integer.parseInt(br.readLine());
+        String line = br.readLine();
         StringTokenizer st = new StringTokenizer(line);
         
     }

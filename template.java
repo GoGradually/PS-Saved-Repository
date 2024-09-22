@@ -13,12 +13,12 @@ public class template {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         for (int i = 0; i < test; i++) {
             run(br, bw);
-            bw.flush();
         }
+        bw.flush();
     }
 
     public static void run(BufferedReader br, BufferedWriter bw) throws IOException{
-        Integer n = Integer.valueOf(br.readLine());
+        int n = Integer.parseInt(br.readLine());
         String line = br.readLine();
         StringTokenizer st = new StringTokenizer(line);
         

@@ -12,16 +12,37 @@ public class D1_2003 {
         int test = Integer.parseInt(br.readLine());
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         for (int i = 0; i < test; i++) {
-            run(br, bw);
-            bw.flush();
+            solve(br, bw);
         }
+        bw.flush();
     }
 
-    public static void run(BufferedReader br, BufferedWriter bw) throws IOException{
-        Integer n = Integer.parseInt(br.readLine());
-        String line = br.readLine();
-        StringTokenizer st = new StringTokenizer(line);
-        
+    public static void solve(BufferedReader br, BufferedWriter bw) throws IOException{
+        String nm = br.readLine();
+        StringTokenizer tokenNM = new StringTokenizer(nm);
+        int n = Integer.parseInt(tokenNM.nextToken());
+        long m = Long.parseLong(tokenNM.nextToken());
+        long max = 0L;
+        for (int i = 0; i < n; i++) {     
+            String line = br.readLine();
+            StringTokenizer st = new StringTokenizer(line);
+            int count = Integer.parseInt(st.nextToken());
+            long[] arr = new long[count + 3];
+            for (int j = 0; j < count; j++) {
+                int now = Integer.parseInt(st.nextToken());
+                if(now <= count + 2) arr[now] = 1;
+            }
+            int flag = 0;
+            while(arr[flag] != 0) flag++;
+            arr[flag] = 1;
+            while(arr[flag] != 0) flag++;
+            max = Math.max(flag, max);
+        }
+        long ans = m*(m+1) / 2;
+        long point = Math.min(max, m);
+        ans -= point*(point+1)/2;
+        ans += max*(point + 1);
+        System.out.println(ans);
     }
 }
 

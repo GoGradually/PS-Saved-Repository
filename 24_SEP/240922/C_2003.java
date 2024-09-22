@@ -18,7 +18,7 @@ public class C_2003 {
     }
 
     public static void run(BufferedReader br, BufferedWriter bw) throws IOException{
-        Integer n = Integer.parseInt(br.readLine());
+        Integer n = Integer.valueOf(br.readLine());
         String line = br.readLine();
         int[] count = new int[26];
         int start = 'a';

@@ -18,7 +18,7 @@ public class template {
     }
 
     public static void run(BufferedReader br, BufferedWriter bw) throws IOException{
-        Integer n = Integer.parseInt(br.readLine());
+        Integer n = Integer.valueOf(br.readLine());
         String line = br.readLine();
         StringTokenizer st = new StringTokenizer(line);
         

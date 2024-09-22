@@ -3,7 +3,6 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.*;
 
 //Change to Problem Class
 public class A_2003 {
@@ -18,7 +17,7 @@ public class A_2003 {
     }
 
     public static void run(BufferedReader br, BufferedWriter bw) throws IOException{
-        Integer n = Integer.parseInt(br.readLine());
+        Integer n = Integer.valueOf(br.readLine());
         String line = br.readLine();
         
         if(line.charAt(n-1) == line.charAt(0)){

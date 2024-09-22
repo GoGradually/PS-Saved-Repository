@@ -3,21 +3,22 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
+//Change to Main Class
 public class template {
     public static void main(String[] args) throws IOException {
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
         int test = Integer.parseInt(bf.readLine());
         for (int i = 0; i < test; i++) {
-            RunObject runObject = new RunObject();
-            runObject.run();
+            run(bf);
         }
     }
 
-    public static class RunObject{
-        void run(){
-            return;
-        }
-
+    public static void run(BufferedReader bf) throws IOException{
+        Integer n = Integer.parseInt(bf.readLine());
+        System.out.println(n);
+        String line = bf.readLine();
+        StringTokenizer st = new StringTokenizer(line);
+        
     }
 }
 

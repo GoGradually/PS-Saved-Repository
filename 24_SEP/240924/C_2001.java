@@ -3,7 +3,6 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.*;
 
 //Change Class Name to Problem Name
 public class C_2001 {
@@ -19,9 +18,81 @@ public class C_2001 {
 
     public static void run(BufferedReader br, BufferedWriter bw) throws IOException{
         int n = Integer.parseInt(br.readLine());
-        String line = br.readLine();
-        StringTokenizer st = new StringTokenizer(line);
-        
+        Dsu dsu = new Dsu(n);
+        StringBuilder sBuilder = new StringBuilder();
+        sBuilder.append("! ");
+        while(true){
+            int next = -1;
+            int now = 0;
+            for (int i = 1; i < n; i++) {
+                if(dsu.find(i) != dsu.find(now)){
+                    next = i;
+                    break;
+                }
+            }
+            if(next == -1){
+                break;
+            }
+            while(true){
+                int x = query(br, bw, now, next);
+                if(x == now){
+                    dsu.merge(x, next);
+                    sBuilder.append(String.valueOf(x + 1)).append(" ").append(String.valueOf(next + 1)).append(" ");
+                    break;
+                }
+                if(dsu.find(x) == dsu.find(now)){
+                    now = x;
+                }
+                else if(dsu.find(x) == dsu.find(next)){
+                    next = x;
+                }
+                else if(dsu.find(x) != dsu.find(next) && dsu.find(x) != dsu.find(now)){
+                    next = x;
+                }
+            }
+        }
+        bw.write(sBuilder.toString() + '\n');
+        bw.flush();
+    }
+
+    static class Dsu{
+        public int[] parent, rank;
+        public Dsu(int n){
+            parent = new int[n];
+            rank = new int[n];
+            for (int i = 0; i < n; i++) {
+                parent[i] = i;
+                rank[i] = 1;
+            }
+        }
+
+        public int find(int now){
+            if(parent[now] == now){
+                return now;
+            }
+            return parent[now] = find(parent[now]);
+        }
+
+        public void merge(int u, int v){
+            u = find(u);
+            v = find(v);
+            if(rank[u] < rank[v]){
+                int temp = u;
+                u = v;
+                v = temp;
+            }
+            parent[v] = u;
+            if(rank[u] == rank[v]) rank[u]++;
+        }
+    }
+
+    private static int query(BufferedReader br, BufferedWriter bw, int a, int b) throws NumberFormatException, IOException{
+        String strA = String.valueOf(a + 1);
+        String strB = String.valueOf(b + 1);
+        bw.write("? " + strA + " " + strB + '\n');
+        bw.flush();
+        int x = Integer.parseInt(br.readLine());
+        return x - 1;
     }
 }
 

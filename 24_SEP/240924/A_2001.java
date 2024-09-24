@@ -21,7 +21,16 @@ public class A_2001 {
         int n = Integer.parseInt(br.readLine());
         String line = br.readLine();
         StringTokenizer st = new StringTokenizer(line);
-        
+        int[] cnt = new int[101];
+        while(st.hasMoreTokens()){
+            int now = Integer.parseInt(st.nextToken());
+            cnt[now]++;
+        }
+        int max = 0;
+        for (int i = 0; i < cnt.length; i++) {
+            max = Math.max(max, cnt[i]);
+        }
+        bw.write(String.valueOf(n - max) + '\n');
     }
 }
 

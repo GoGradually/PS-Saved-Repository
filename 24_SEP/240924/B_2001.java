@@ -3,7 +3,6 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.*;
 
 //Change Class Name to Problem Name
 public class B_2001 {
@@ -19,9 +18,25 @@ public class B_2001 {
 
     public static void run(BufferedReader br, BufferedWriter bw) throws IOException{
         int n = Integer.parseInt(br.readLine());
-        String line = br.readLine();
-        StringTokenizer st = new StringTokenizer(line);
-        
+        StringBuilder builder = new StringBuilder();
+        if(n%2 == 0){
+            builder.append(-1);
+            bw.write(builder.toString() + '\n');
+            return;
+        }
+        int cnt = 1;
+        int[] arr = new int[n];
+        for (int i = n/2; i < n; i++) {
+            arr[i] = cnt++;
+        }
+        for (int i = n/2 - 1; i >= 0; i--) {
+            arr[i] = cnt++;
+        }
+        for (var now : arr) {
+            builder.append(String.valueOf(now) + ' ');
+        }
+        builder.append('\n');
+        bw.write(builder.toString());
     }
 }
 

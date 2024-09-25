@@ -18,10 +18,34 @@ public class A_1998 {
     }
 
     public static void run(BufferedReader br, BufferedWriter bw) throws IOException{
-        int n = Integer.parseInt(br.readLine());
         String line = br.readLine();
         StringTokenizer st = new StringTokenizer(line);
-        
+        int x, y, k;
+        x = Integer.parseInt(st.nextToken());
+        y = Integer.parseInt(st.nextToken());
+        k = Integer.parseInt(st.nextToken());
+        StringBuilder builder = new StringBuilder();
+        int cnt = 1;
+        while(k>=2){
+            k-=2;
+            builder.append(String.valueOf(x - cnt))
+                .append(" ")
+                .append(String.valueOf(y))
+                .append('\n');
+            builder.append(String.valueOf(x + cnt))
+                .append(" ")
+                .append(String.valueOf(y))
+                .append('\n');
+            
+            cnt++;
+        }
+        if (k == 1){
+            builder.append(String.valueOf(x))
+                .append(" ")
+                .append(String.valueOf(y))
+                .append('\n');
+        }
+        bw.write(builder.toString());
     }
 }
 

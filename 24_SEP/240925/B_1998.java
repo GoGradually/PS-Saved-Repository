@@ -21,7 +21,16 @@ public class B_1998 {
         int n = Integer.parseInt(br.readLine());
         String line = br.readLine();
         StringTokenizer st = new StringTokenizer(line);
-        
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[(i+1)%n] = Integer.parseInt(st.nextToken());
+        }
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < n; i++) {
+            builder.append(String.valueOf(arr[i])).append(" ");
+        }
+        builder.append('\n');
+        bw.write(builder.toString());
     }
 }
 

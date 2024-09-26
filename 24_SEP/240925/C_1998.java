@@ -1,9 +1,6 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.util.*;
+import java.util.function.Function;
 
 //Change Class Name to Problem Name
 public class C_1998 {
@@ -18,9 +15,95 @@ public class C_1998 {
     }
 
     public static void run(BufferedReader br, BufferedWriter bw) throws IOException{
-        int n = Integer.parseInt(br.readLine());
         String line = br.readLine();
         StringTokenizer st = new StringTokenizer(line);
+        int n;
+        long k;
+        n = Integer.parseInt(st.nextToken());
+        k = Long.parseLong(st.nextToken());
+        
+        List<Point> arr = new ArrayList<>();
+        
+        String aLine = br.readLine();
+        String bLine = br.readLine();
+        StringTokenizer aTokens = new StringTokenizer(aLine);
+        StringTokenizer bTokens = new StringTokenizer(bLine);
+        for (int i = 0; i < n; i++) {
+            long a = Long.parseLong(aTokens.nextToken());
+            long b = Long.parseLong(bTokens.nextToken());
+            arr.add(new Point(a, b));
+        }
+        Collections.sort(arr);
+        long max = 0;
+        for (int i = 0; i < n; i++) {
+            long now = arr.get(i).a;
+            if(arr.get(i).b == 1) now += k;
+            if(i < n / 2) now += arr.get(n/2).a;
+            else now += arr.get((n - 2)/2).a;
+            if(now > max) max = now;
+        }
+        long left = 0L;
+        long right = 3_000_000_100L;
+        
+        Function<Long, Boolean> check = val -> {
+            long cnt = 0;
+            long aim = (val + 1) / 2;
+            if(arr.get(n-1).a > val / 2) aim = val - arr.get(n-1).a;
+            long cost = 0;
+            for(int i = n-1; i>= 0; i--){
+                if(arr.get(i).a >= aim){
+                    cnt++;
+                }
+                else if(arr.get(i).b==1){
+                    cnt++;
+                    cost += aim - arr.get(i).a;
+                }
+                if(cnt == (n + 1) / 2 + 1) break;
+            }
+            if(cnt < (n + 1)/2 + 1) return false;
+            else if (cost > k) return false;
+            return true;
+        };
+
+        while(left <= right){
+            long mid = (left + right)/2;
+            if(check.apply(mid)){
+                left = mid + 1;
+            }else{
+                right = mid - 1;
+            }
+        }
+        bw.write(String.valueOf(Math.max(max, right)));
+        bw.write('\n');
+    }
+
+    static class Point implements Comparable<Point>{
+        long a;
+        long b;
+
+        public Point(long a, long b) {
+            this.a = a;
+            this.b = b;
+        }
+
+        @Override
+        public int compareTo(C_1998.Point o) {
+            if(this.a < o.a){
+                return -1;
+            }
+            if(this.a > o.a){
+                return 1;
+            }
+            if(this.a == o.a){
+                if(this.b < o.b){
+                    return 1;
+                }
+                if(this.b > o.b){
+                    return -1;
+                }
+            }
+            return 0;
+        }
         
     }
 }
@@ -45,6 +128,7 @@ public class C_1998 {
 //         - 각 기능들이 어떤 책임을 가지고 있는지
 //         - “어떤 패턴”으로 동작하는지
 //     - 가장 Naive한 상태/알고리즘부터 시작하기 (완전 탐색, 단순 자료구조)
+//     - 뚜렷한 증명이 나오지 않을 땐, 어떤 기준을 만들고 나눠서 보기
 //     - 단위 동작의 조건 분기 파악
 //     - 가장 극단적인 경우에서 추론 (가장 차이가 뚜렷한 예제)
 // 2. "처음"부터 직접 경우의 수 전개(수식&도식화, 엄밀한 조건 정리)

@@ -18,10 +18,30 @@ public class C_1993 {
     }
 
     public static void run(BufferedReader br, BufferedWriter bw) throws IOException{
-        int n = Integer.parseInt(br.readLine());
         String line = br.readLine();
         StringTokenizer st = new StringTokenizer(line);
-        
+        int n = Integer.parseInt(st.nextToken());
+        int k = Integer.parseInt(st.nextToken());
+        String line2 = br.readLine();
+        StringTokenizer st2 = new StringTokenizer(line2);
+        int[] arr = new int[n];
+        int x = 0;
+        for (int i = 0; i < n; i++) {
+            arr[i] = Integer.parseInt(st2.nextToken());
+            x = Math.max(x, arr[i]);
+        }
+        int y = x + k;
+        for (int i = 0; i < n; i++) {
+            if(((x - arr[i]) / k) % 2 == 1)
+                x += k - (x - arr[i]) % k;
+            else
+                y = Math.min(y, x + k - (x - arr[i]) % k);
+        }
+        if(x >= y){
+            bw.write("-1\n");
+        }else{
+            bw.write(String.valueOf(x) + '\n');
+        }
     }
 }
 
@@ -59,6 +79,11 @@ take notes.
 // 현재의 흐름을 가장 잘 이어갈 수 있도록 !!!
 
 (x - a_i) / k  의 패리티가 모두 짝수인 가장 작은 x 
+((x - a_i) / k) % 2 == 1
+x += k - (x - a_i) % k
+(x - a_i) / k % 2 == 0
+y = min(y, x + k - (x - a_i) % k)
+
 짝수면 마진 설정
 홀수면 스타트 설정
 */

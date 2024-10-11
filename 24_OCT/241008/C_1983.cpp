@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#pragma GCC diagnostic ignored "-Wc++11-extensions"
 #define ll long long
 #define INF ((int)1e9 + 10)
 #define lINF ((ll)1e18 + 10LL)
@@ -28,40 +27,37 @@ void Solve() {
     ll require = aSum[n] / 3;
     if (aSum[n] % 3 != 0) require++;
 
-    auto check = [&](int left, int right, int num) -> bool {
-        vector<ll> &now = (num == 0) ? aSum : (num == 1) ? bSum : cSum;
-        return (now[right] - now[left] >= require);
+    auto check = [&](int left, int right, vector<ll> &now) -> bool {
+        return (now[right] - now[left - 1] >= require);
     };
-    auto go = [&](int a, int b, int c) -> bool {
-        int aLeft = 0, aRight = n;
+
+    auto go = [&](int left) -> bool {
+        int aLeft = left, aRight = n;
         while (aLeft < aRight) {
             int mid = (aLeft + aRight) / 2;
-            if (check(0, mid, a))
+            if (check(left, mid, aSum))
                 aRight = mid - 1;
             else
                 aLeft = mid + 1;
         }
-        int bLeft = 0, bRight = n;
-        while (bLeft < bRight) {
-            int mid = (bLeft + bRight) / 2;
-            if (check(mid, n, b)) {
-                bLeft = mid + 1;
-            } else {
-                bRight = mid - 1;
-            }
-        }
-        if (check(aRight, bRight, c)) {
+        if (check(1, left - 1, bSum) && check(aLeft + 1, n, cSum)) {
+            cout << left << ' ' << aLeft << ' ';
+            cout << 1 << ' ' << left - 1 << ' ';
+            cout << aLeft + 1 << ' ' << n << '\n';
             return true;
-        } else {
-            return false;
         }
+        if (check(1, left - 1, cSum) && check(aLeft + 1, n, bSum)) {
+            cout << left << ' ' << aLeft << ' ';
+            cout << aLeft + 1 << ' ' << n << '\n';
+            cout << 1 << ' ' << left - 1 << ' ';
+            return true;
+        }
+        return false;
     };
-    if (go(0, 1, 2)) return;
-    if (go(0, 2, 1)) return;
-    if (go(1, 0, 2)) return;
-    if (go(1, 2, 0)) return;
-    if (go(2, 0, 1)) return;
-    if (go(2, 1, 0)) return;
+    for (int i = 2; i < n - 1; i++) {
+        if (go(i)) return;
+    }
+
     cout << "-1\n";
 }
 

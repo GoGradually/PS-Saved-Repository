@@ -9,8 +9,25 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    ll x, y, k;
+    cin >> x >> y >> k;
+    while (k > 0) {
+        k -= y - (x % y);
+        x += y - (x % y);
+        if (k < 0) {
+            x += k;
+            break;
+        }
+        while (x % y == 0) x /= y;
+        if (x == 1) break;
+    }
+    if (k > 0) {
+        x = (k + 1) % (y - 1);
+        if (x == 0) x = y - 1;
+        cout << x << '\n';
+    } else {
+        cout << x << '\n';
+    }
 }
 
 int main() {
@@ -76,6 +93,12 @@ int main() {
 take notes.
 // 다시 보는용이 아닌
 // 현재의 흐름을 가장 잘 이어갈 수 있도록 !!!
+
+    k -= y - (x % y)
+덧셈이 인수를 다 뭉개버리지 않음?
+17 18 19 5 6 7 2 3 1
+12 3 1
+15 1
 
 */
 

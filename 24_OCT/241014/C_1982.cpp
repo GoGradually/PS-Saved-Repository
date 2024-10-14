@@ -9,8 +9,27 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    ll n, l, r;
+    cin >> n >> l >> r;
+    vector<ll> arr(n), psum(n + 1, 0);
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+        psum[i + 1] = psum[i] + arr[i];
+    }
+    int left = 0;
+    int sum = 0;
+    for (int i = 1; i <= n; i++) {
+        if (psum[i] - psum[left] >= l) {
+            while (psum[i] - psum[left] > r) {
+                left++;
+            }
+            if (psum[i] - psum[left] >= l) {
+                sum++;
+                left = i;
+            }
+        }
+    }
+    cout << sum << '\n';
 }
 
 int main() {

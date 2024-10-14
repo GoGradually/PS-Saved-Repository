@@ -9,8 +9,19 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    int n, m;
+    cin >> n >> m;
+    int p, q;
+    cin >> p >> q;
+    if (n < m && q <= p) {
+        cout << "NO\n";
+        return;
+    }
+    if (n > m && p <= q) {
+        cout << "NO\n";
+        return;
+    }
+    cout << "YES\n";
 }
 
 int main() {

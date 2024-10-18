@@ -9,8 +9,42 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    ll n, k;
+    cin >> n >> k;
+    ll now = 0;
+    vector<ll> ans(n);
+    for (int i = 0; i < n; i++) {
+        ans[i] = i + 1;
+    }
+    if (k % 2) {
+        cout << "NO\n";
+        return;
+    }
+    if (k > n * (n + 1) / 2 - n / 2 - n % 2) {
+        cout << "NO\n";
+        return;
+    }
+
+    int j = n - 1;
+    for (int i = 0; i < j; i++) {
+        if (k - (abs(i + 1 - ans[j]) + abs(j + 1 - ans[i])) >= 0) {
+            k -= (abs(i + 1 - ans[j]) + abs(j + 1 - ans[i]));
+            swap(ans[i], ans[j]);
+            j--;
+            continue;
+        }
+        j--;
+        if (k - (abs(i + 1 - ans[j]) + abs(j + 1 - ans[i])) >= 0) {
+            k -= (abs(i + 1 - ans[j]) + abs(j + 1 - ans[i]));
+            swap(ans[i], ans[j]);
+            j--;
+        }
+    }
+    cout << "YES\n";
+    for (int i = 0; i < n; i++) {
+        cout << ans[i] << ' ';
+    }
+    cout << '\n';
 }
 
 int main() {
@@ -76,7 +110,27 @@ int main() {
 take notes.
 // 다시 보는용이 아닌
 // 현재의 흐름을 가장 잘 이어갈 수 있도록 !!!
+1 2 3 4 5 6 7
+3 1 2
+1 2
+2 1 -> 2
+1 2 3
+3 2 1 -> 4
+1 2 3 4
+4 3 2 1 -> 8
+1 2 3 4 5
+5 4 3 2 1 -> 12
+1 2 3 4 5 6
+6 5 4 3 2 1 -> 18
+1 2 3 4
+7 6 5 4 -> 24
+1 2 3 4
+8 7 6 5 -> 32
+1 2 3 4 5
+9 8 7 6 5 -> 40
 
+홀수일때 -> n' => +n+1
+짝수일때 -> n' =>  +n
 */
 
 // commit 시 피드백할 것 Message로 남겨두기!!

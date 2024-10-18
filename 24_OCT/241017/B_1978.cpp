@@ -9,8 +9,19 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    ll n, a, b;
+    cin >> n >> a >> b;
+    ll mn = n * a;
+    if (b < a) {
+        cout << mn << '\n';
+        return;
+    }
+    if (n >= b - a) {
+        mn += (b - a) * (b - a + 1) / 2;
+    } else {
+        mn = (b - n + 1 + b) * n / 2;
+    }
+    cout << mn << '\n';
 }
 
 int main() {

@@ -9,8 +9,14 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    int l, r;
+    cin >> l >> r;
+    int cnt = 0;
+    while (r > 1) {
+        cnt++;
+        r /= 2;
+    }
+    cout << cnt << '\n';
 }
 
 int main() {

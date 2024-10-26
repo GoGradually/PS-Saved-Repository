@@ -11,6 +11,113 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    vector<ll> arr(n);
+    vector<pair<ll, int>> b;
+    vector<int> ans(n);
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+        if (arr[i] == -1) {
+            if (!b.empty() && b.back().first == -1) {
+                b.back().second++;
+            } else {
+                b.push_back({-1, 1});
+            }
+        } else {
+            b.push_back({arr[i], 1});
+        }
+        ans[i] = arr[i];
+    }
+    if (b.size() == 1) {
+        if (b[0].first == -1) {
+            int d = 2;
+            for (int i = 0; i < n; i++) {
+                cout << d << ' ';
+                d = 3 - d;
+            }
+            cout << '\n';
+        } else {
+            cout << b[0].first << '\n';
+        }
+        return;
+    }
+
+    if (b[0].first == -1) {
+        int d = b[1].first * 2;
+        int cc = 3 * d;
+        for (int i = b[0].second - 1; i >= 0; i--) {
+            ans[i] = d;
+            d = cc - d;
+        }
+    }
+    if (b.back().first == -1) {
+        int d = b[b.size() - 2].first * 2;
+        int cc = 3 * d;
+        for (int i = n - b.back().second; i < n; i++) {
+            ans[i] = d;
+            d = cc - d;
+        }
+    }
+
+    int index = b[0].second;
+    for (int now = 1; now < b.size() - 1; now++) {
+        if (b[now].first == -1) {
+            ll left = b[now - 1].first;
+            ll right = b[now + 1].first;
+            bool ok = false;
+            for (ll i = left, lCnt = 0; i > 0; i >>= 1, lCnt++) {
+                for (ll j = right, rCnt = 0; j > 0; j >>= 1, rCnt++) {
+                    if (i == j) {
+                        ll x = lCnt + rCnt - 1;
+                        if (x > b[now].second) {
+                            continue;
+                        }
+                        if ((b[now].second - x) % 2 != 0) {
+                            continue;
+                        }
+                        if (b[now].second > x) {
+                            for (int tt = index; tt < index + b[now].second - x;
+                                 tt += 2) {
+                                // 4칸 중 2칸 제거 -> index + b[now].second(4) -
+                                // x(2)
+                                ans[tt] = ans[index - 1] * 2;
+                                ans[tt + 1] = ans[index - 1];
+                            }
+
+                            index += b[now].second - x;
+                            b[now].second = x;
+                        }
+
+                        for (int p = 0; p < lCnt; p++) {
+                            ans[index + p] = left >> (p + 1);
+                        }
+                        for (int q = 0; q < rCnt; q++) {
+                            ans[index + b[now].second - q] = right >> q;
+                        }
+                        ok = true;
+                    }
+                    if (ok) break;
+                }
+                if (ok) break;
+            }
+
+            if (!ok) {
+                cout << -1 << '\n';
+                return;
+            }
+        }
+        index += b[now].second;
+    }
+
+    for (int i = 0; i < n - 1; i++) {
+        if (ans[i] / 2 == ans[i + 1] || ans[i + 1] / 2 == ans[i]) continue;
+        cout<<-1<<'\n';
+        return;
+    }
+
+    for (int i = 0; i < n; i++) {
+        cout << ans[i] << ' ';
+    }
+    cout << '\n';
 }
 
 int main() {

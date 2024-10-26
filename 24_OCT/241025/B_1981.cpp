@@ -9,8 +9,27 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    ll n, m;
+    cin >> n >> m;
+    ll ans = 0;
+
+    ll i = 1;
+    while (i < (1LL << 32)) {
+        if (i & n) {
+            ans |= i;
+            i <<= 1;
+            continue;
+        }
+        ll j = (i - 1) & n;
+        ll mn = i - j;
+        if (i < n) mn = min(j + 1, i - j);
+        if (mn <= m) {
+            ans |= i;
+        }
+        i <<= 1;
+    }
+
+    cout << ans << '\n';
 }
 
 int main() {

@@ -12,37 +12,34 @@ void Solve() {
     int n;
     cin >> n;
     vector<int> arr(n);
+    bool small = true;
     for (int i = 0; i < n; i++) {
         cin >> arr[i];
+        if (arr[i] == n) {
+            if (i % 2) {
+                small = true;
+            } else {
+                small = false;
+            }
+        }
     }
     set<int> s;
     for (int i = 1; i <= n; i++) {
         s.insert(i);
     }
     vector<int> ans(n);
-    bool small = true;
     for (int i = 0; i < n; i++) {
         if (small) {
-            auto it1 = s.upper_bound(n + 1 - arr[i]);
+            auto it1 = s.upper_bound(n - arr[i]);
             it1--;
             auto it2 = s.upper_bound(n / 2);
             it2--;
             ans[i] = min(*it1, *it2);
-            if (ans[i] + arr[i] >= ans[i - 1] + arr[i - 1]) {
-                i--;
-                small = !small;
-                continue;
-            }
             s.erase(ans[i]);
         } else {
-            auto it1 = s.lower_bound(n + 2 - arr[i]);
+            auto it1 = s.lower_bound(n + 1 - arr[i]);
             auto it2 = s.lower_bound(n / 2 + 1);
             ans[i] = max(*it1, *it2);
-            if (ans[i] + arr[i] <= ans[i - 1] + arr[i - 1]) {
-                i--;
-                small = !small;
-                continue;
-            }
             s.erase(ans[i]);
         }
         small = !small;

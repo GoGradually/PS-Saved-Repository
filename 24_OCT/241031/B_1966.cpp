@@ -9,8 +9,63 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    int n, m;
+    cin >> n >> m;
+    vector<vector<int>> arr(n, vector<int>(m));
+    for (int i = 0; i < n; i++) {
+        string str;
+        cin >> str;
+        for (int j = 0; j < m; j++) {
+            arr[i][j] = str[j] == 'B' ? 1 : 0;
+        }
+    }
+    bool ok1 = false, ok2 = false;
+    for (int i = 0; i < n; i++) {
+        if (arr[i][0] == arr[n - 1][m - 1]) ok1 = true;
+    }
+    for (int j = 0; j < m; j++) {
+        if (arr[0][j] == arr[n - 1][m - 1]) ok2 = true;
+    }
+    if (ok1 && ok2) {
+        cout << "YES\n";
+        return;
+    }
+
+    ok1 = false, ok2 = false;
+    for (int i = 0; i < n; i++) {
+        if (arr[i][m - 1] == arr[n - 1][0]) ok1 = true;
+    }
+    for (int j = 0; j < m; j++) {
+        if (arr[0][j] == arr[n - 1][0]) ok2 = true;
+    }
+    if (ok1 && ok2) {
+        cout << "YES\n";
+        return;
+    }
+
+    ok1 = false, ok2 = false;
+    for (int i = 0; i < n; i++) {
+        if (arr[i][0] == arr[0][m - 1]) ok1 = true;
+    }
+    for (int j = 0; j < m; j++) {
+        if (arr[n - 1][j] == arr[0][m - 1]) ok2 = true;
+    }
+    if (ok1 && ok2) {
+        cout << "YES\n";
+        return;
+    }
+    ok1 = false, ok2 = false;
+    for (int i = 0; i < n; i++) {
+        if (arr[i][m - 1] == arr[0][0]) ok1 = true;
+    }
+    for (int j = 0; j < m; j++) {
+        if (arr[n - 1][j] == arr[0][0]) ok2 = true;
+    }
+    if (ok1 && ok2) {
+        cout << "YES\n";
+        return;
+    }
+    cout << "NO\n";
 }
 
 int main() {

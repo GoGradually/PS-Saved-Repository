@@ -9,8 +9,31 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    ll n, k;
+    cin >> n >> k;
+    vector<int> ans;
+    ll minus = 0;
+    ll remain = k;
+    int index = 0;
+    if (n == 1) {
+        cout << k << '\n';
+        return;
+    }
+    while (remain > 0) {
+        if (remain % 2 == 0) {
+            remain -= 1;
+            minus += (1 << index);
+            k -= (1 << index);
+        }
+        index++;
+        remain /= 2;
+    }
+    cout << k << ' ' << minus << ' ';
+    for (int i = 2; i < n; i++) {
+        cout << "0 ";
+    }
+
+    cout << '\n';
 }
 
 int main() {

@@ -11,6 +11,28 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    vector<int> arr(n);
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+
+    vector<vector<int>> bit(n + 1, vector<int>(32));
+    for (int j = 0; j < 32; j++) {
+        for (int i = 1; i <= n; i++) {
+            bit[i][j] = bit[i - 1][j] ^ (arr[i - 1] >> j);
+            bit[i][j] &= 1;
+        }
+    }
+    vector<vector<vector<ll>>> preNumBit(
+        n + 1, vector<vector<int>>(32, vector<int>(2)));
+    vector<vector<vector<ll>>> sufNumBit(
+        n + 1, vector<vector<int>>(32, vector<int>(2)));
+    for (int i = 0; i < n; i++) {
+    }
+
+    for (int i = 0; i < n; i++) {
+
+    }
 }
 
 int main() {

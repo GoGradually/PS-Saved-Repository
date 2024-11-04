@@ -8,15 +8,34 @@ const ll MOD = 1000000007LL;
 
 using namespace std;
 
+vector<ll> dp(300001);
+
 void Solve() {
-    int n;
-    cin >> n;
+    ll n, k;
+    cin >> n >> k;
+    int cnt = 0;
+    for (int i = 0; i < k; i++) {
+        int temp1, temp2;
+        cin >> temp1 >> temp2;
+        if (temp1 == temp2)
+            cnt++;
+        else
+            cnt += 2;
+    }
+    cout << dp[n - cnt] << '\n';
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
     int T = 1;
+    dp[0] = 1;
+    dp[1] = 1;
+    for (int i = 2; i <= 300000; i++) {
+        dp[i] = dp[i - 1] + 2 * (i - 1) * dp[i - 2];
+        dp[i] %= MOD;
+    }
+
     cin >> T;
     while (T--) Solve();
     return 0;

@@ -11,6 +11,17 @@ using namespace std;
 void Solve() {
     int n;
     cin >> n;
+    vector<int> arr(101);
+    for (int i = 0; i < n; i++) {
+        int temp;
+        cin >> temp;
+        arr[temp]++;
+    }
+    int ans = 0;
+    for (int i = 0; i < 101; i++) {
+        ans += arr[i] / 3;
+    }
+    cout << ans << '\n';
 }
 
 int main() {

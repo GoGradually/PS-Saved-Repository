@@ -2,15 +2,55 @@
 #define ll long long
 #define INF ((int)1e9 + 10)
 #define lINF ((ll)1e18 + 10LL)
-const ll MOD = 1000000007LL;
+const ll MOD = 998244353LL;
 // #include <atcoder/modint.hpp>
 // using mint = atcoder::modint998244353;
 
 using namespace std;
 
+vector<int> g[300001];
+vector<vector<ll>> dp(300001, vector<ll>(3));
+
+void dfs(int now, int prev) {
+    dp[now][0] = 1;
+    dp[now][1] = 1;
+    dp[now][2] = 0;
+    ll a = 1, b = 1, c = 1;
+    for (auto &&next : g[now]) {
+        if (next == prev) continue;
+        dfs(next, now);
+        b *= dp[next][0];
+        b %= MOD;
+        b *= dp[next][1];
+        b %= MOD;
+        c *= dp[next][1];
+        c %= MOD;
+        c *= dp[next][2];
+        c %= MOD;
+    }
+    dp[now][0] = a;
+    dp[now][1] = b;
+    dp[now][2] = c;
+}
+
 void Solve() {
     int n;
     cin >> n;
+    for (int i = 0; i <= n; i++) {
+        dp[i][0] = -1;
+        dp[i][1] = -1;
+        dp[i][2] = -1;
+        g[i].clear();
+    }
+
+    for (int i = 0; i < n - 1; i++) {
+        int a, b;
+        cin >> a >> b;
+        g[a].push_back(b);
+        g[b].push_back(a);
+    }
+    dfs(1, 0);
+    cout << (dp[1][0] + dp[1][1] + dp[1][2]) % MOD << '\n';
 }
 
 int main() {

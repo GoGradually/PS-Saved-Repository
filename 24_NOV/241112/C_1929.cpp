@@ -9,8 +9,28 @@ const ll MOD = 1000000007LL;
 using namespace std;
 
 void Solve() {
-    int n;
-    cin >> n;
+    ll k, x, a;
+    cin >> k >> x >> a;
+    ll tag = 1;
+    ll now = a;
+    for (int i = 0; i < x; i++) {
+        // a - now < k * bet 이 되는 숫자bet 만큼 now 빼기
+        ll lo = 1, hi = now;
+        while (lo <= hi) {
+            ll mid = (lo + hi) / 2;
+            if (a < now - mid + k * mid) {
+                hi = mid - 1;
+            } else {
+                lo = mid + 1;
+            }
+        }
+        now -= lo;
+    }
+    if (now * k > a) {
+        cout << "YES\n";
+    } else {
+        cout << "NO\n";
+    }
 }
 
 int main() {

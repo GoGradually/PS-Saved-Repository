@@ -54,24 +54,20 @@ void Solve() {
     }
 
     dfs(1, 0);
-    int mxInd = 0, mxFlag = 0;
+    int mxFlag = 0;
     int mx = 0;
-    for (int i = 1; i <= n; i++) {
-        if (mx < dp[i][0]) {
-            mxFlag = 0;
-            mxInd = i;
-            mx = dp[i][0];
-        }
-        if (mx < dp[i][1]) {
-            mxFlag = 1;
-            mxInd = i;
-            mx = dp[i][1];
-        }
+    if (mx < dp[1][0]) {
+        mxFlag = 0;
+        mx = dp[1][0];
+    }
+    if (mx < dp[1][1]) {
+        mxFlag = 1;
+        mx = dp[1][1];
     }
     cout << mx << '\n';
-    sort(visitList[mxInd][mxFlag].begin(), visitList[mxInd][mxFlag].end());
-    for (int i = 0; i < visitList[mxInd][mxFlag].size(); i++) {
-        cout << visitList[mxInd][mxFlag][i] << ' ';
+    sort(visitList[1][mxFlag].begin(), visitList[1][mxFlag].end());
+    for (int i = 0; i < visitList[1][mxFlag].size(); i++) {
+        cout << visitList[1][mxFlag][i] << ' ';
     }
     cout << '\n';
 }

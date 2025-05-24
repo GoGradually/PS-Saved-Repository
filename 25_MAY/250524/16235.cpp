@@ -21,32 +21,38 @@ void Solve() {
         }
     }
     vector<vector<int>> nowFeed(n, vector<int>(n, 5));
-    vector<vector<priority_queue<int>>> nowTree(
-        n, vector<priority_queue<int>>(n, priority_queue<int>()));
+    vector<vector<map<int, int>>> nowTree(n, vector<map<int, int>>(n));
+
+    int ans = m;
+
     for (int i = 0; i < m; i++) {
         int x, y, z;
         cin >> x >> y >> z;
-        nowTree[x - 1][y - 1].push(-z);
+        nowTree[x - 1][y - 1][z]++;
     }
     for (int nowYear = 0; nowYear < year; nowYear++) {
         // 봄
         vector<vector<int>> deadTreeOlds(n, vector<int>(n, 0));
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                vector<int> newTree;
-                while (!nowTree[i][j].empty()) {
-                    int tree = -nowTree[i][j].top();
-                    nowTree[i][j].pop();
-                    if (tree > nowFeed[i][j])
-                        deadTreeOlds[i][j] += tree / 2;
-                    else {
-                        nowFeed[i][j] -= tree;
-                        newTree.push_back(-(tree + 1));
-                    }
+                map<int, int> newTree;
+                for (auto const& [age, count] : nowTree[i][j]) {
+                    if (count == 0) continue;
+                    // 먹일 수 있는만큼 먹이고, 나머진 다 죽여야 함
+                    int canFeedCount = 0;
+                    int deadTreeCount = 0;
+
+                    // 먹일 수 있는 나무 수
+                    canFeedCount = min(nowFeed[i][j] / age, count);
+                    // 죽여야 하는 나무 수
+                    deadTreeCount = count - canFeedCount;
+
+                    nowFeed[i][j] -= canFeedCount * age;
+                    newTree[age + 1] += canFeedCount;
+                    ans -= deadTreeCount;
+                    deadTreeOlds[i][j] += age / 2 * deadTreeCount;
                 }
-                for (int k = 0; k < newTree.size(); k++) {
-                    nowTree[i][j].push(newTree[k]);
-                }
+                nowTree[i][j].swap(newTree);
             }
         }
 
@@ -61,28 +67,20 @@ void Solve() {
         vector<vector<int>> newTrees(n, vector<int>(n));
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                vector<int> trees;
-                int count = 0;
-                while (!nowTree[i][j].empty()) {
-                    trees.push_back(-nowTree[i][j].top());
-                    nowTree[i][j].pop();
-                    if (trees.back() % 5 == 0) count++;
-                }
-                for (int k = 0; k < 8; k++) {
-                    int x = i + dx[k], y = j + dy[k];
-                    if (x < 0 || x >= n || y < 0 || y >= n) continue;
-                    newTrees[x][y] += count;
-                }
-                for (int k = 0; k < trees.size(); k++) {
-                    nowTree[i][j].push(-trees[k]);
+                for (auto const& [age, count] : nowTree[i][j]) {
+                    if (age % 5 != 0) continue;
+                    for (int k = 0; k < 8; k++) {
+                        int x = i + dx[k], y = j + dy[k];
+                        if (x < 0 || x >= n || y < 0 || y >= n) continue;
+                        newTrees[x][y] += count;
+                    }
                 }
             }
         }
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                for (int k = 0; k < newTrees[i][j]; k++) {
-                    nowTree[i][j].push(-1);
-                }
+                nowTree[i][j][1] += newTrees[i][j];
+                ans += newTrees[i][j];
             }
         }
 
@@ -91,12 +89,6 @@ void Solve() {
             for (int j = 0; j < n; j++) {
                 nowFeed[i][j] += arr[i][j];
             }
-        }
-    }
-    int ans = 0;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            ans += nowTree[i][j].size();
         }
     }
     cout << ans << '\n';

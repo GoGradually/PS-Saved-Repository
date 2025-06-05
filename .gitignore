@@ -18,3 +18,8 @@ hmmm.py
 main.cpp
 *.bin
 /out/**
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build

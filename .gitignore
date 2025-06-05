@@ -4,6 +4,7 @@ x64/Debug/
 .cph/
 .vs/
 build/
+.idea/
 **/*.class
 11049.exe
 PS.exe
@@ -16,3 +17,4 @@ hmmm.py
 .DS_store
 main.cpp
 *.bin
+/out/**
